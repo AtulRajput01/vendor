@@ -1,0 +1,144 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {
+  CContainer,
+  CRow,
+  CCol,
+  CCard,
+  CCardBody,
+  CForm,
+  CFormLabel,
+  CFormInput,
+  CFormTextarea,
+  CButton,
+  CListGroup,
+  CListGroupItem,
+} from '@coreui/react'; // Adjust imports based on your setup
+import { useLocation } from 'react-router-dom';
+
+const ExtensionSelect = () => {
+  const [extensionDetails, setExtensionDetails] = useState({
+    extensionName: '',
+    extensionDescription: '',
+    extensionImage: null,
+    price: '',
+    shopId:''
+  });
+  const location = useLocation();
+  const { id } = location.state || {}
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setExtensionDetails({
+      ...extensionDetails,
+      [name]: value,
+    });
+  };
+
+  const handleImageChange = (e) => {
+    setExtensionDetails({
+      ...extensionDetails,
+      extensionImage: e.target.files[0],
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('extensionName', extensionDetails.extensionName);
+    formData.append('extensionDescription', extensionDetails.extensionDescription);
+    formData.append('extensionImage', extensionDetails.extensionImage);
+    formData.append('price', extensionDetails.price);
+    formData.append('shopId', id);
+
+    try {
+      const response = await axios.post('http://localhost:3002/api/Extension/addExtension', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      navigate('/Shops')
+    } catch (error) {
+      console.error('Error adding extension:', error);
+    }
+  };
+
+  return (
+    <CContainer style={{ padding: '5rem' }}>
+      <CRow className="justify-content-center">
+        <CCol md="8">
+          <CCard>
+            <CCardBody>
+              <CForm onSubmit={handleSubmit}>
+                <h1 style={{ color: '#20c997' }}>Extension Registration</h1>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="extensionName" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                    Extension Name
+                  </CFormLabel>
+                  <CFormInput
+                    type="text"
+                    id="extensionName"
+                    name="extensionName"
+                    placeholder="Enter extension name"
+                    value={extensionDetails.extensionName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="extensionDescription" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                    Extension Description
+                  </CFormLabel>
+                  <CFormTextarea
+                    id="extensionDescription"
+                    name="extensionDescription"
+                    rows="4"
+                    placeholder="Enter extension description"
+                    value={extensionDetails.extensionDescription}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="extensionImage" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                    Extension Image
+                  </CFormLabel>
+                  <CFormInput
+                    type="file"
+                    id="extensionImage"
+                    name="extensionImage"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="price" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                    Price
+                  </CFormLabel>
+                  <CFormInput
+                    type="number"
+                    id="price"
+                    name="price"
+                    placeholder="Enter price"
+                    value={extensionDetails.price}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <CButton type="submit" color="primary">
+                  Add Extension
+                </CButton>
+              </CForm>
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
+
+    </CContainer>
+  );
+};
+
+export default ExtensionSelect;
