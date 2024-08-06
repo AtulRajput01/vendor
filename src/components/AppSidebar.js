@@ -20,6 +20,7 @@ import { sygnet } from 'src/assets/brand/sygnet'
 // sidebar nav config
 import navigation from '../_nav'
 import { auto, left } from '@popperjs/core'
+import huntLogo from 'src/assets/brand/texi.png'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
@@ -38,10 +39,12 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarHeader className="border-bottom">
-        <CSidebarBrand to="/">
-        {/* <img className="d-block" src={LOGOPRO} alt="slide 3" style={{display:'block', marginLeft: '70px', marginRight: 'auto', width:'80px'}}/> */}
-        
-          {/* <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} /> */}
+      <CSidebarBrand to="/">
+          
+          <img className='d-block' src={huntLogo} alt = 'Hunting Website' style={{ height: "120px", width: '150px', borderRadius: "1rem", padding: "0.7rem", marginLeft: "2rem"}} />
+
+          {/* <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} /> */}
+          <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
         </CSidebarBrand>
      
       </CSidebarHeader>
