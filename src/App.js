@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { CSpinner, useColorModes } from '@coreui/react';
 import './scss/style.scss';
+import ProtectedRoute from './ProtectedRoute '
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'));
@@ -18,12 +19,8 @@ const ForgotPasswordRequest = React.lazy(() => import('./views/pages/forgotpassw
 const Subscription = React.lazy(() => import('./Subscription'));
 const ShopDetails = React.lazy(() => import('./ShopDetails'));
 const SpeciesSelect = React.lazy(() => import('./SpeciesSelect'));
-
 const Extension = React.lazy(() => import('./Extension'));
-
-
-
-// const verifyOTP = React.lazy(() => import('./views/pages/verifyotp/verifyOTP'));
+const VerifyOTP = React.lazy(() => import('./views/pages/verifyotp/verifyOTP'));
   
 // Custom components
 const AuthList = React.lazy(() => import('./AuthList'));
@@ -68,7 +65,7 @@ const App = () => {
         <Routes>
           <Route exact path="/login" name="Login Page" element={<Login />} />
           <Route exact path="/forgot-password" name="Forgot Password Page" element={<ForgotPassword />} />
-          <Route exact path="/reset-password/:token" name="Reset Password Page" element={<ResetPassword />} />
+          <Route exact path="/reset-password/" name="Reset Password Page" element={<ResetPassword />} />
           <Route exact path="/forgot-password-request" name="Forgot Password Request Page" element={<ForgotPasswordRequest />} />
           <Route exact path="/verify-otp" name="verify OTP Page" element={<verifyOTP />} />     
           <Route exact path="/register" name="Register Page" element={<Register />} />
@@ -79,14 +76,10 @@ const App = () => {
           <Route exact path="/SpeciesSelect" name="Species Selection Page" element={<SpeciesSelect />} />
           <Route exact path="/ShopDetails" name="Shopdetails Page" element={<ShopDetails />} />
           <Route exact path="/Extension" name="Extension Page" element={<Extension />} />
-          {/* <Route exact path="/usermanage-list" name="User Management" element={<UserManageList />} />
-          <Route exact path="/vehiclemanage-list" name="Vehicle Management" element={<VehicleManageList />} />
-          {/* <Route exact path="/bookmanage-list" name="BookManage List" element={<BookManageList />} />  */}
-          {/* <Route exact path="/transacmanage-list" name="Transaction Management" element={<TransacManageList />} />
-          <Route exact path="/productmanage-list" name="Product Management" element={<ProductManageList />} /> */}
-          
-          {/* <Route exact path="/staticcontentmanage-list" name="Static Content Management" element={<StaticContentManageList />} /> Add AuthList route */}
-          <Route path="*" name="Home" element={<DefaultLayout />} />
+          <Route exact path="/VerifyOTP" name="VerifyOTP Page" element={<VerifyOTP/>} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="*" name="Home" element={<DefaultLayout />} />
+          </Route>
         </Routes>
       </Suspense>
     </BrowserRouter>

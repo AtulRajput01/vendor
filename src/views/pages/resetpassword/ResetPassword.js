@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useLocation , Link, useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
-  const { token } = useParams(); 
 
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+  const token = location.state?.token;
 
   const handleResetPassword = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3002/api/auths/reset-password', {
+      const response = await fetch('http://54.244.180.151:3002/api/auths/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,13 +71,6 @@ const ResetPassword = () => {
               >
                 {loading ? 'Loading...' : 'Reset Password'}
               </button>
-              {message && <p>{message}</p>}
-              {isSuccess && (
-                <div className="mt-3">
-                  {/* <p>Password reset successful.</p> */}
-                  <p>Redirecting to <Link to="/login">Login</Link>...</p>
-                </div>
-              )}
             </div>
           </div>
         </div>

@@ -1,15 +1,20 @@
 // ForgotPasswordRequest.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPasswordRequest = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleForgotPassword = async () => {
     try {
-      const response = await axios.post('http://localhost:3002/api/auths/send-email', { email });
+      const response = await axios.post('http://54.244.180.151:3002/api/auths/send-email', { email });
       setMessage(response.data.message);
+      if (response.status === 200) {
+       navigate('/verifyOTP');
+      }
     } catch (error) {
       setMessage("Failed to send password reset email");
     }

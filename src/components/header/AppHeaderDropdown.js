@@ -2,23 +2,14 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   CAvatar,
-  CBadge,
   CDropdown,
-  CDropdownDivider,
   CDropdownHeader,
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
 } from '@coreui/react'
 import {
-  cilBell,
-  cilCreditCard,
-  cilCommentSquare,
-  cilEnvelopeOpen,
-  cilFile,
   cilLockLocked,
-  cilSettings,
-  cilTask,
   cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
@@ -29,10 +20,13 @@ const AppHeaderDropdown = () => {
   const navigateTo = useNavigate();
 
   const handleLogout = () => {
-    // Redirect to the logout URL
- 
-      navigateTo('/Login')
-  }
+    localStorage.removeItem('token');
+    navigateTo('/Login');
+  };
+
+  const handleProfileClick = () => {
+    navigateTo('/Profile');
+  };
 
   return (
     <CDropdown variant="nav-item">
@@ -40,12 +34,11 @@ const AppHeaderDropdown = () => {
         <CAvatar src={avatar7} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
-   
-       
-        
-       
         <CDropdownHeader className="bg-body-secondary fw-semibold my-2">Settings</CDropdownHeader>
-        
+        <CDropdownItem onClick={handleProfileClick}>
+          <CIcon icon={cilUser} className="me-2" />
+          Profile
+        </CDropdownItem>
         <CDropdownItem onClick={handleLogout}>
           <CIcon icon={cilLockLocked} className="me-2" />
           Logout
@@ -55,4 +48,4 @@ const AppHeaderDropdown = () => {
   )
 }
 
-export default AppHeaderDropdown
+export default AppHeaderDropdown;

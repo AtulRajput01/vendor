@@ -1,0 +1,24 @@
+.profile-img-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-img {
+    width: 100px; /* Adjust width as needed */
+    height: 100px; /* Adjust height as needed */
+    border-radius: 50%; /* Make the image circular */
+    object-fit: cover; /* Ensure the image covers the container */
+}  
+.change-password-btn {
+  background-color: #007bff; /* Primary color */
+  color: white;
+  border: none;
+  margin-top: 20px; /* Space from the profile text */
+}
+
+.change-password-btn:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+  color: white;
+}
+
