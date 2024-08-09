@@ -50,7 +50,7 @@ const OrderDetails = () => {
   };
 
   const handleConfirmOrder = async (id) => {
-    await axios.post(`http://54.244.180.151:3002/api/orders/confirm`, { orderId: id });
+    await axios.put(`http://54.244.180.151:3002/api/order/${id}`);
     fetchOrders();
   };
 
