@@ -19,7 +19,7 @@ const OrderManage = () => {
             <div className="card-header">Order Status Tracking</div>
             <div className="card-body">
               <p>Track the current status of the order.</p>
-              <Link to="/order/OrderStatusTrack" className="btn btn-light">Track Status</Link>
+              <Link to="/OrderStatusTrack" className="btn btn-light">Track Status</Link>
             </div>
           </div>
         </div>

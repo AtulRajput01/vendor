@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell } from '@coreui/react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faEye , faTruck,faBoxOpen,faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -49,8 +49,8 @@ const OrderDetails = () => {
     setOrders(response.data.data);
   };
 
-  const handleConfirmOrder = async (id) => {
-    await axios.put(`http://54.244.180.151:3002/api/order/${id}`);
+  const handleConfirmOrder = async (id,status) => {
+    await axios.put(`http://54.244.180.151:3002/api/order/${id}`,{status});
     fetchOrders();
   };
 
@@ -94,17 +94,44 @@ const OrderDetails = () => {
               <CTableDataCell style={{ textAlign: "center" }}>{order.species.length}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{order.extensions.length}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{new Date(order.orderDate).toLocaleDateString()}</CTableDataCell>
-              <CTableDataCell style={{ textAlign: "center" }}>{order.status}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center" }}>{order.paymentStatus}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>${order.totalAmount}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>
-                <Tooltip title="Confirm Order">
-                  <button
-                    style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                    onClick={() => handleConfirmOrder(order.orderId)}
-                  >
-                    <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#28a745", fontSize: '20px' }} />
-                  </button>
-                </Tooltip>
+              {order.status === 'pending' && (
+                    <Tooltip title="Confirm Order">
+                      <button
+                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                        onClick={() => handleConfirmOrder(order.orderId ,'confirmed')}
+                      >
+                        <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#28a745", fontSize: '20px' }} />
+                      </button>
+                    </Tooltip>
+                  )}
+                  {order.status === 'confirmed' && (
+                    <Tooltip title="Ship Order">
+                      <button
+                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                        onClick={() => handleConfirmOrder(order.orderId ,'shipped')}
+                      >
+                        <FontAwesomeIcon icon={faTruck} style={{ color: "#007bff", fontSize: '20px' }} />
+                      </button>
+                    </Tooltip>
+                  )}
+                  {order.status === 'shipped' && (
+                    <Tooltip title="Deliver Order">
+                      <button
+                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                        onClick={() => handleConfirmOrder(order.orderId , 'delivered')}
+                      >
+                        <FontAwesomeIcon icon={faBoxOpen} style={{ color: "#ffc107", fontSize: '20px' }} />
+                      </button>
+                    </Tooltip>
+                  )}
+                 {order.status === 'delivered' && (
+                    <span style={{ color: "#28a745", fontSize: '16px', fontWeight: 'bold' }}>
+                      Delivered
+                    </span>
+                  )}
                 <Tooltip title="View Order">
                   <button
                     style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer', marginLeft: '10px' }}
