@@ -22,22 +22,11 @@ const SpeciesSelect = React.lazy(() => import('./SpeciesSelect'));
 const Extension = React.lazy(() => import('./Extension'));
 const VerifyOTP = React.lazy(() => import('./views/pages/verifyotp/verifyOTP'));
   
-// Custom components
 const AuthList = React.lazy(() => import('./AuthList'));
-// const UserManageList = React.lazy(() => import('./UserManageList'));
-// const VehicleManageList = React.lazy(() => import('./VehicleManageList'));
-// // const BookManageList = React.lazy(() => import('./BookManageList'));
-// const TransacManageList = React.lazy(() => import('./TransacManageList'));
-// const ProductManageList = React.lazy(() => import('./ProductManageList'));
-// const StaticContentManageList = React.lazy(() => import('./StaticContentManageList'));
-
-
-
 
 const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme');
   const storedTheme = useSelector((state) => state.theme);
-
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.href.split('?')[1]);
@@ -51,8 +40,7 @@ const App = () => {
     }
 
     setColorMode(storedTheme);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+  }, []); 
   return (
     <BrowserRouter>
       <Suspense

@@ -72,8 +72,6 @@ const ShopDetails = () => {
         },
       });
 
-      console.log('Shop details created:', response.data);
-      // Reset form fields after submission
       setShopDetails({
         shopName: '',
         shopDescription: '',
@@ -88,8 +86,7 @@ const ShopDetails = () => {
         address: '',
         vendorId: ''
       });
-      // Navigate to SpeciesSelect component or any other desired location
-      navigate('/Shops');
+      navigate('/Subscription');
     } catch (error) {
       console.error('Error creating shop details:', error);
     }
@@ -119,7 +116,6 @@ const ShopDetails = () => {
                   />
                 </div>
                 
-                {/* Shop Description */}
                 <div className="mb-2">
                   <CFormLabel htmlFor="shopDescription" style={{ fontSize: '0.875rem' }}>Shop Description</CFormLabel>
                   <CFormTextarea

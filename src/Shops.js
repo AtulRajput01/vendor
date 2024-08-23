@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton } from '@coreui/react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEye,faCirclePlus,faPuzzlePiece  } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEye,faCirclePlus,faPuzzlePiece,faArrowRight  } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 const Shops = () => {
@@ -38,6 +38,10 @@ const Shops = () => {
 
   const AddExtension=async(id)=>{
     navigate('/Extension', { state: { id } });
+  }
+
+  const goToSubscription=async(shopId)=>{
+    navigate('/Subscription',{state:{shopId}});
   }
 
   return (
@@ -93,22 +97,35 @@ const Shops = () => {
                 >
                   <FontAwesomeIcon icon={faTrash} style={{ color: "#fd2b2b", fontSize: '20px' }} />
                 </button>
-                <Tooltip title="Add Species">
-                  <button
-                    style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                    onClick={() => AddSpesies(shop._id)}
-                  >
-                    <FontAwesomeIcon icon={faCirclePlus} style={{ color: "#28a745", fontSize: '20px' }} />
-                  </button>
-                </Tooltip>
-                <Tooltip title="Add Extensions">
-                  <button
-                    style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                    onClick={() => AddExtension(shop._id)}
-                  >
-                    <FontAwesomeIcon icon={faPuzzlePiece} fade  />
-                  </button>
-                </Tooltip>
+                {shop.isSubscription ? (
+                    <>
+                    <Tooltip title="Add Species">
+                      <button
+                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                        onClick={() => AddSpesies(shop._id)}
+                      >
+                        <FontAwesomeIcon icon={faCirclePlus} style={{ color: "#28a745", fontSize: '20px' }} />
+                      </button>
+                    </Tooltip>
+                    <Tooltip title="Add Extensions">
+                      <button
+                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                        onClick={() => AddExtension(shop._id)}
+                      >
+                        <FontAwesomeIcon icon={faPuzzlePiece} fade />
+                      </button>
+                    </Tooltip>
+                  </>
+                ) : (
+                  <Tooltip title="Go to Subscription">
+                    <button
+                      style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                      onClick={() => goToSubscription(shop._id)}
+                    >
+                      <FontAwesomeIcon icon={faArrowRight} style={{ marginRight: '5px' }} />
+                    </button>
+                  </Tooltip>
+                )}
               </CTableDataCell>
             </CTableRow>
           ))}

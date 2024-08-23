@@ -170,6 +170,10 @@ const OrderDetails = () => {
                   <Typography variant="body1">{selectedOrder.shopAddress || 'N/A'}</Typography>
                 </InfoRow>
                 <InfoRow>
+                  <Typography variant="body1"><strong>delivery Address:</strong></Typography>
+                  <Typography variant="body1">{selectedOrder.deliveryAddress || 'N/A'}</Typography>
+                </InfoRow>
+                <InfoRow>
                   <Typography variant="body1"><strong>Order Date:</strong></Typography>
                   <Typography variant="body1">{new Date(selectedOrder.orderDate).toLocaleDateString()}</Typography>
                 </InfoRow>

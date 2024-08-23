@@ -32,11 +32,7 @@ const Login = () => {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('vendorID', response.data.data._id);
       setMessage(response.data.message);
-      if(response.data.data.isSubscription){
         navigateTo('/dashboard');
-      }else{
-        navigateTo('/Subscription');
-      }
     } catch (error) {
       setMessage('Login failed');
     }
