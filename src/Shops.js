@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton } from '@coreui/react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEye,faCirclePlus,faPuzzlePiece,faArrowRight  } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEye,faCirclePlus,faPuzzlePiece,faArrowRight,faArrowUp   } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 const Shops = () => {
@@ -97,7 +97,7 @@ const Shops = () => {
                 >
                   <FontAwesomeIcon icon={faTrash} style={{ color: "#fd2b2b", fontSize: '20px' }} />
                 </button>
-                {shop.isSubscription ? (
+                {shop.isSubscription && !shop.isSubscriptionExpired ? (
                     <>
                     <Tooltip title="Add Species">
                       <button
@@ -117,14 +117,27 @@ const Shops = () => {
                     </Tooltip>
                   </>
                 ) : (
-                  <Tooltip title="Go to Subscription">
-                    <button
-                      style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                      onClick={() => goToSubscription(shop._id)}
-                    >
-                      <FontAwesomeIcon icon={faArrowRight} style={{ marginRight: '5px' }} />
-                    </button>
-                  </Tooltip>
+                  <>
+                  {shop.isSubscription && shop.isSubscriptionExpired ? (
+                    <Tooltip title="Upgrade Subscription">
+                      <button
+                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                        onClick={() => goToSubscription(shop._id)}
+                      >
+                        <FontAwesomeIcon icon={faArrowUp} style={{ marginRight: '5px' }} />
+                      </button>
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Go to Subscription">
+                      <button
+                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                        onClick={() => goToSubscription(shop._id)}
+                      >
+                        <FontAwesomeIcon icon={faArrowRight} style={{ marginRight: '5px' }} />
+                      </button>
+                    </Tooltip>
+                  )}
+                </>
                 )}
               </CTableDataCell>
             </CTableRow>

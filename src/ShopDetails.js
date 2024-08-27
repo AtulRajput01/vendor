@@ -86,7 +86,7 @@ const ShopDetails = () => {
         address: '',
         vendorId: ''
       });
-      navigate('/Subscription');
+      navigate('/Subscription',{state:{shopId:response.data.shopDetails._id}});
     } catch (error) {
       console.error('Error creating shop details:', error);
     }
