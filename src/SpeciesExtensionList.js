@@ -18,20 +18,20 @@ const SpeciesExtensionList = () => {
   }, [shopId]);
 
   const fetchSpecies=async(shopId)=>{
-    const response = await axios.get(`http://localhost:3002/api/species/getSpecies/${shopId}`);
+    const response = await axios.get(`http://54.244.180.151:3002/api/species/getSpecies/${shopId}`);
     setSpecies(response.data.data)
   };
   const fetchExtension=async(shopId)=>{
-    const response = await axios.get(`http://localhost:3002/api/Extension/getExtension/${shopId}`);
+    const response = await axios.get(`http://54.244.180.151:3002/api/Extension/getExtension/${shopId}`);
     setExtensions(response.data.data)
   };
   const deleteExtension=async(id)=>{
-    const response = await axios.delete(`http://localhost:3002/api/Extension/deleteExten/${id}`);
+    const response = await axios.delete(`http://54.244.180.151:3002/api/Extension/deleteExten/${id}`);
     fetchExtension(shopId);
   }
 
   const deleteSpecies=async(id)=>{
-    const response = await axios.delete(`http://localhost:3002/api/species/deleteSpecies/${id}`);
+    const response = await axios.delete(`http://54.244.180.151:3002/api/species/deleteSpecies/${id}`);
     fetchSpecies(shopId);
   }
 
@@ -64,7 +64,7 @@ const SpeciesExtensionList = () => {
                     <CTableDataCell style={{ textAlign: "center" }}>{specie.speciesName}</CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>
                       {specie.speciesImage ? (
-                        <img src={`http://localhost:3002/${specie.speciesImage}`} alt="Species" style={{ width: '50px', height: '50px' }} />
+                        <img src={`http://54.244.180.151:3002/${specie.speciesImage}`} alt="Species" style={{ width: '50px', height: '50px' }} />
                       ) : "No Image"}
                     </CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>{specie.price}</CTableDataCell>
@@ -110,7 +110,7 @@ const SpeciesExtensionList = () => {
                     <CTableDataCell style={{ textAlign: "center" }}>{extension.extensionName}</CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>
                       {extension.image ? (
-                        <img src={`http://localhost:3002/${extension.image}`} alt="Extension" style={{ width: '50px', height: '50px' }} />
+                        <img src={`http://54.244.180.151:3002/${extension.image}`} alt="Extension" style={{ width: '50px', height: '50px' }} />
                       ) : "No Image"}
                     </CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>{extension.price}</CTableDataCell>

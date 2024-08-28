@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import {
   CContainer,
   CRow,
@@ -23,15 +23,30 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { useLocation ,useNavigate} from 'react-router-dom';
 import { CheckCircle } from 'react-feather';
 
-const stripePromise = loadStripe('pk_test_51PVXReF0nycpVOubpSaWStkDMBHLa2JGWJIxdHgpQDmIi59xjuCV43FTHrvse07wZAyT5WhYBdbAN6ldL4AJFec500U8RKXJQU');
+const stripePromise = loadStripe('pk_test_51Psf0wKvU065ONAPRhG5nxbGlpBKPjBOJOX5KXZi3ba7Gtw3nQmxBcTBk2ysTHvOXs6Y2mEDb6wgI8a6aJ7BX7DQ00tnmtLr3H');
 
 const Subscription = () => {
+  const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isPaymentFormVisible, setPaymentFormVisible] = useState(false);
   const location = useLocation();
-  const {shopId} = location.state || {}; 
+  const { shopId } = location.state || {}; 
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const response = await axios.get('http://54.244.180.151:3002/api/subscription');
+        setPlans(response.data.data);
+      } catch (error) {
+        console.error('Error fetching subscription plans:', error);
+      }
+    };
+
+    fetchPlans();
+  }, []);
+
   const handleChoosePlan = (planType, amount) => {
-    setSelectedPlan({ planType, amount ,shopId});
+    setSelectedPlan({ planType, amount, shopId });
     setPaymentFormVisible(true);
   };
 
@@ -43,41 +58,35 @@ const Subscription = () => {
         </CCardHeader>
         <CCardBody style={{ padding: "4rem 2rem" }}>
           <CRow className="justify-content-center">
-            <CCol sm="12" md="6" className="mb-4">
-              <CCard className="shadow" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <CCardHeader>
-                  <CCardTitle style={{ color: '#c81e65' }}>Monthly Plan</CCardTitle>
-                  <h2>$100/month</h2>
-                </CCardHeader>
-                <CCardBody style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <CCardText style={{ color: '#198754' }}>This plan offers essential features including:</CCardText>
-                  <ul style={{ listStyle: "none", padding: "0", flexGrow: 1 }}>
-                    <li>24/7 Customer Support</li>
-                    <li>Basic Analytics</li>
-                    <li>Standard Customization</li>
-                  </ul>
-                  <CButton color="secondary" onClick={() => handleChoosePlan('Monthly', 100)}>Choose Plan</CButton>
-                </CCardBody>
-              </CCard>
-            </CCol>
-            <CCol sm="12" md="6" className="mb-4">
-              <CCard className="shadow" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <CCardHeader>
-                  <CCardTitle style={{ color: '#c81e65' }}>Yearly Plan</CCardTitle>
-                  <h2>$1000/year</h2>
-                </CCardHeader>
-                <CCardBody style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <CCardText style={{ color: '#198754' }}>This plan offers all premium features including:</CCardText>
-                  <ul style={{ listStyle: "none", padding: "0", flexGrow: 1 }}>
-                    <li>Premium Support</li>
-                    <li>Advanced Analytics</li>
-                    <li>Full Customization</li>
-                    <li>Exclusive Discounts</li>
-                  </ul>
-                  <CButton color="secondary" onClick={() => handleChoosePlan('Yearly', 1000)}>Choose Plan</CButton>
-                </CCardBody>
-              </CCard>
-            </CCol>
+            {plans.length > 0 ? (
+              plans.map(plan => (
+                <CCol sm="12" md="6" className="mb-4" key={plan._id}>
+                  <CCard className="shadow" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <CCardHeader>
+                      <CCardTitle style={{ color: '#c81e65' }}>{plan.name} Plan</CCardTitle>
+                      <h2>${plan.price}</h2>
+                    </CCardHeader>
+                    <CCardBody style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                      <CCardText style={{ color: '#198754' }}>This plan offers the following features:</CCardText>
+                      <ul style={{ listStyle: "none", padding: "0", flexGrow: 1 }}>
+                        {plan.features.map((feature, index) => (
+                          <li key={index}>{feature}</li>
+                        ))}
+                      </ul>
+                      <CButton color="secondary" onClick={() => handleChoosePlan(plan.name, plan.price)}>Choose Plan</CButton>
+                    </CCardBody>
+                  </CCard>
+                </CCol>
+              ))
+            ) : (
+              <CCol>
+                <CCard className="shadow" style={{ textAlign: 'center', padding: '2rem' }}>
+                  <CCardBody>
+                    <h4>No active subscription plans available</h4>
+                  </CCardBody>
+                </CCard>
+              </CCol>
+            )}
           </CRow>
         </CCardBody>
       </CCard>
@@ -105,6 +114,7 @@ const Subscription = () => {
     </CContainer>
   );
 };
+
 
 const PaymentForm = ({ selectedPlan }) => {
   const navigate = useNavigate();

@@ -81,7 +81,7 @@ $ yarn install
 ### Basic usage
 
 ``` bash
-# dev server with hot reload at http://localhost
+# dev server with hot reload at http://54.244.180.151
 
 
 
@@ -92,7 +92,7 @@ $ npm start
 or 
 
 ``` bash
-# dev server with hot reload at http://localhost
+# dev server with hot reload at http://54.244.180.151
 
 
 
@@ -100,11 +100,11 @@ or
 $ yarn start
 ```
 
-Navigate to [http://localhost
+Navigate to [http://54.244.180.151
 
 
 
-:3000](http://localhost
+:3000](http://54.244.180.151
 
 
 

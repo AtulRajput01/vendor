@@ -11,7 +11,7 @@ const VerifyOTP = () => {
 
   const handleVerifyOTP = async () => {
     try {
-      const response = await axios.post('http://localhost:3002/api/auths/verify-otp', {otp });
+      const response = await axios.post('http://54.244.180.151:3002/api/auths/verify-otp', {otp });
       setMessage(response.data.message);
       const token=response.data.token;
       if (response.status === 200) {

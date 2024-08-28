@@ -19,12 +19,12 @@ const Shops = () => {
 
   const fetchShop = async () => {
     const vendorId = localStorage.getItem('vendorID');
-    const response = await axios.get(`http://localhost:3002/api/ShopDetails/shop/${vendorId}`);
+    const response = await axios.get(`http://54.244.180.151:3002/api/ShopDetails/shop/${vendorId}`);
     setShops(response.data);
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3002/api/ShopDetails/deleteShop/${id}`);
+    await axios.delete(`http://54.244.180.151:3002/api/ShopDetails/deleteShop/${id}`);
     fetchShop();
   };
 
@@ -78,7 +78,7 @@ const Shops = () => {
               <CTableDataCell style={{ textAlign: "center" }}>{shop.address}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>
                 {shop.shopLogo ? (
-                  <img src={`http://localhost:3002/${shop.shopLogo}`} alt="Shop Logo" style={{ width: '50px', height: '50px' }} />
+                  <img src={`http://54.244.180.151:3002/${shop.shopLogo}`} alt="Shop Logo" style={{ width: '50px', height: '50px' }} />
                 ) : "null"}
               </CTableDataCell>
               <CTableDataCell>
