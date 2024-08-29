@@ -16,7 +16,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilLockLocked, cilUser } from '@coreui/icons';
-
+import logoImage from './logo.png';
 const Login = () => {
   const navigateTo = useNavigate();
   const [email, setEmail] = useState('');
@@ -31,33 +31,37 @@ const Login = () => {
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('vendorID', response.data.data._id);
-      setMessage(response.data.message);
-        navigateTo('/dashboard');
+      navigateTo('/dashboard');
     } catch (error) {
       setMessage('Login failed');
     }
   };
 
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={8}>
+    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center ">
+      <CContainer >
+        <CRow className="justify-content-center" >
+          <CCol style={{maxWidth: '37%'}}>
             <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
+              <CCard className="p-4 bg-dark-gray" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}  >
+                <CCardBody className="text-center">
+                  <div className="mb-4">
+                    <img src={logoImage} alt="Logo" style={{ maxWidth: '45%', height: 'auto' }} />
+                  </div>
                   <CForm>
-                    <h1>Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
+                    <h1>Welcome!</h1>
+                    <p className="text-light" >Sign In</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
                       <CFormInput
+                        type="email"
                         placeholder="Email"
                         autoComplete="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        required
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -70,43 +74,33 @@ const Login = () => {
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                       />
                     </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton
-                          color="success"
-                          variant="outline"
+                    <CCol>
+                      <CCol>
+                      <CButton
+                          color="primary"
                           className="px-4"
                           onClick={handleLogin}
                         >
                           Login
                         </CButton>
                       </CCol>
-                      <CCol xs={6} className="text-right">
-                        <Link to="/forgot-password-request">
-                          <CButton color="link" className="px-0">
+                      <CCol className="text-right">
+                        <Link to="/forgot-password">
+                          <CButton color="link" className="px-2" style={{color:"white"}}>
                             Forgot password?
                           </CButton>
                         </Link>
+                        <Link to="/register">
+                          <CButton color="link" className="px-0" style={{color:"white"}}>
+                            Register
+                          </CButton>
+                        </Link>
                       </CCol>
-                    </CRow>
-                    {message && <p className="text-danger mt-3">{message}</p>}
-                    {/* Display the message if it exists */}
+                    </CCol>
                   </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-info py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>Please register if you don't have an account.</p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
                 </CCardBody>
               </CCard>
             </CCardGroup>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   CContainer,
@@ -16,17 +16,34 @@ import {
 } from '@coreui/react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const SpeciesSelect = () => {
   const [speciesList, setSpeciesList] = useState([]);
+  const [speciesOptions, setSpeciesOptions] = useState([]);
   const [speciesDetails, setSpeciesDetails] = useState({
     speciesName: '',
     speciesImage: null,
     price: '',
-    shopId:''
+    shopId: ''
   });
   const location = useLocation();
-  const { id } = location.state || {}
+  const { id } = location.state || {};
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchSpeciesOptions = async () => {
+      try {
+        const response = await axios.get('http://54.244.180.151:3002/api/species/getSpeciesCategories');
+        setSpeciesOptions(response.data);
+      } catch (error) {
+        console.error('Error fetching species options:', error);
+      }
+    };
+
+    fetchSpeciesOptions();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,12 +62,22 @@ const SpeciesSelect = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append('speciesName', speciesDetails.speciesName);
-    formData.append('speciesImage', speciesDetails.speciesImage);
     formData.append('price', speciesDetails.price);
     formData.append('shopId', id);
 
+    // Find the default image URL for the selected species
+    const selectedSpecies = speciesOptions.find(species => species.name === speciesDetails.speciesName);
+    const defaultImage = selectedSpecies ? selectedSpecies.image : '';
+
+    // Append the image or default image URL
+    if (speciesDetails.speciesImage) {
+      formData.append('speciesImage', speciesDetails.speciesImage);
+    } else if (defaultImage) {
+      formData.append('speciesImage', defaultImage);
+    }
 
     try {
       const response = await axios.post('http://54.244.180.151:3002/api/species/addSpecies', formData, {
@@ -65,9 +92,9 @@ const SpeciesSelect = () => {
         speciesImage: null,
         price: '',
       });
-       navigate('/Shops')
+      navigate('/Shops');
     } catch (error) {
-      console.error('Error adding species:', error);
+      toast.error(error.response?.data?.message || 'Error adding species');
     }
   };
 
@@ -102,22 +129,11 @@ const SpeciesSelect = () => {
                     required
                   >
                     <option value="">Select species</option>
-                    <option value="Deer">Deer</option>
-                    <option value="Elk">Elk</option>
-                    <option value="Bears">Bears</option>
-                    <option value="Cats">Cats</option>
-                    <option value="African Game">African Game</option>
-                    <option value="Birds">Birds</option>
-                    <option value="Fish">Fish</option>
-                    <option value="Whitetail Deer">Whitetail Deer</option>
-                    <option value="Mule Deer">Mule Deer</option>
-                    <option value="Elk">Elk</option>
-                    <option value="Black Bear">Black Bear</option>
-                    <option value="Bobcat">Bobcat</option>
-                    <option value="Wild Turkey">Wild Turkey</option>
-                    <option value="Waterfowl">Waterfowl</option>
-                    <option value="Upland Game Birds">Upland Game Birds</option>
-                    <option value="Predators">Predators</option>
+                    {speciesOptions.map((species) => (
+                      <option key={species.id} value={species.name}>
+                        {species.name}
+                      </option>
+                    ))}
                   </CFormSelect>
                 </div>
                 <div className="mb-3">
@@ -130,7 +146,6 @@ const SpeciesSelect = () => {
                     name="speciesImage"
                     accept="image/*"
                     onChange={handleImageChange}
-                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -172,11 +187,7 @@ const SpeciesSelect = () => {
         </div>
       )}
 
-      {/* <div id="addMoreSection" className="mt-5">
-        <CButton color="secondary" onClick={handleAddMore}>
-          Add More Species
-        </CButton>
-      </div> */}
+      <ToastContainer />
     </CContainer>
   );
 };

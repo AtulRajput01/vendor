@@ -1,5 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation , Link, useNavigate } from 'react-router-dom';
+import {
+  CCard,
+  CCardBody,
+  CButton,
+  CCol,
+  CContainer,
+  CForm,
+  CFormInput,
+  CInputGroup,
+  CInputGroupText,
+  CRow,
+  CCardGroup
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilLockLocked } from '@coreui/icons';
+import logoImage from './logo.png';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -48,33 +64,45 @@ const ResetPassword = () => {
   }, [isSuccess, navigate]);
 
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
-            <h5 className="card-header">Reset Password</h5>
-            <div className="card-body">
-              <div className="mb-3">
-                <label className="form-label">New Password:</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  className="form-control"
-                  disabled={loading}
-                />
-              </div>
-              <button
-                onClick={handleResetPassword}
-                className="btn btn-info"
-                disabled={loading}
-              >
-                {loading ? 'Loading...' : 'Reset Password'}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+      <CContainer className="d-flex justify-content-center align-items-center min-vh-100">
+        <CRow className="justify-content-center">
+          <CCol md={20}>
+            <CCardGroup className="shadow-lg">
+            <CCard className="p-4 bg-dark-gray" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}>
+                <CCardBody>
+                  <CForm>
+                  <div className="mb-4 text-center">
+                      <img src={logoImage} alt="Logo" style={{ maxWidth: '50%', height: 'auto' }} />
+                    </div>
+                    <h3 className="text-center mb-4">Reset Password</h3>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupText>
+                        <CIcon icon={cilLockLocked} />
+                      </CInputGroupText>
+                      <CFormInput
+                        type="password"
+                        placeholder="Enter new password"
+                        autoComplete="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                    </CInputGroup>
+                    <CRow className="justify-content-center">
+                      <CCol xs={12} className="text-center">
+                        <CButton color="primary" className="px-4" onClick={handleResetPassword}>
+                        Reset Password
+                        </CButton>
+                      </CCol>
+                    </CRow>
+                  </CForm>
+                </CCardBody>
+              </CCard>
+            </CCardGroup>
+          </CCol>
+        </CRow>
+      </CContainer>
     </div>
   );
 };

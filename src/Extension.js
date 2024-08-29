@@ -23,7 +23,8 @@ const ExtensionSelect = () => {
     extensionDescription: '',
     extensionImage: null,
     price: '',
-    shopId:''
+    shopId:'',
+    role:'vendor'
   });
   const location = useLocation();
   const { id } = location.state || {}
@@ -52,6 +53,7 @@ const ExtensionSelect = () => {
     formData.append('extensionImage', extensionDetails.extensionImage);
     formData.append('price', extensionDetails.price);
     formData.append('shopId', id);
+    formData.append('role', extensionDetails.role);
 
     try {
       const response = await axios.post('http://54.244.180.151:3002/api/Extension/addExtension', formData, {

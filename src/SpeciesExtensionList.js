@@ -115,9 +115,6 @@ const SpeciesExtensionList = () => {
                     </CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>{extension.price}</CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>
-                      {/* <CButton style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
-                      <FontAwesomeIcon icon={faPen} style={{ color: "#74C0FC", fontSize: '20px' }} />
-                      </CButton> */}
                       <button
                         style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
                         onClick={() => deleteExtension(extension._id)}

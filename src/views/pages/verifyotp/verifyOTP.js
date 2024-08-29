@@ -1,6 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {
+  CCard,
+  CCardBody,
+  CButton,
+  CCol,
+  CContainer,
+  CForm,
+  CFormInput,
+  CInputGroup,
+  CInputGroupText,
+  CRow,
+  CCardGroup
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { cilShieldAlt } from '@coreui/icons';
+import logoImage from './logo.png';
 
 
 const VerifyOTP = () => {
@@ -23,22 +39,45 @@ const VerifyOTP = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
-            <h5 className="card-header">Verify OTP</h5>
-            <div className="card-body">
-              <div className="mb-3">
-                <label className="form-label">OTP:</label>
-                <input type="text" value={otp} onChange={e => setOtp(e.target.value)} className="form-control" />
-              </div>
-              <button onClick={handleVerifyOTP} className="btn btn-info">Verify OTP</button>
-              <p>{message}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+      <CContainer className="d-flex justify-content-center align-items-center min-vh-100">
+        <CRow className="justify-content-center">
+          <CCol md={20}>
+            <CCardGroup className="shadow-lg">
+            <CCard className="p-4 bg-dark-gray" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}>
+                <CCardBody>
+                  <CForm>
+                  <div className="mb-4 text-center">
+                      <img src={logoImage} alt="Logo" style={{ maxWidth: '50%', height: 'auto' }} />
+                    </div>
+                    <h3 className="text-center mb-4">Verify OTP</h3>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupText>
+                        <CIcon icon={cilShieldAlt} />
+                      </CInputGroupText>
+                      <CFormInput
+                        type="text"
+                        placeholder="Enter otp"
+                        autoComplete="otp"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        required
+                      />
+                    </CInputGroup>
+                    <CRow className="justify-content-center">
+                      <CCol xs={12} className="text-center">
+                        <CButton color="primary" className="px-4" onClick={handleVerifyOTP}>
+                         Send OTP
+                        </CButton>
+                      </CCol>
+                    </CRow>
+                  </CForm>
+                </CCardBody>
+              </CCard>
+            </CCardGroup>
+          </CCol>
+        </CRow>
+      </CContainer>
     </div>
   );
 };
