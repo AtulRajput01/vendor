@@ -54,7 +54,7 @@ const AppHeader = () => {
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
             <CNavLink component={NavLink} to="/dashboard"> {/* Use component={NavLink} for navigation */}
-              Dashboard
+              
             </CNavLink>
           </CNavItem>
           {/* <CNavItem>
@@ -93,7 +93,7 @@ const AppHeader = () => {
               ) : (
                 <CIcon icon={cilSun} size="lg" />
               )} */}
-              <CIcon icon={cilSun} size="lg" /> {/* Example icon */}
+              <CIcon icon={cilSun} size="lg" />
             </CDropdownToggle>
             <CDropdownMenu>
               {/* Replace with appropriate logic for color mode */}
