@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../../../../src/scss/common.css';
 import {
   CButton,
   CCard,
@@ -16,7 +17,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilLockLocked, cilUser } from '@coreui/icons';
-import logoImage from './logo.png';
+import logoImage from '../../../../public/logo/tlogo1.png';
 const Login = () => {
   const navigateTo = useNavigate();
   const [email, setEmail] = useState('');
@@ -38,19 +39,19 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center ">
+    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center " >
       <CContainer >
         <CRow className="justify-content-center" >
           <CCol style={{maxWidth: '37%'}}>
             <CCardGroup>
-              <CCard className="p-4 bg-dark-gray" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}  >
+              <CCard className="p-4 bg-dark-gray image" style={{ backgroundColor: '#FE3C00'}}  >
                 <CCardBody className="text-center">
                   <div className="mb-4">
-                    <img src={logoImage} alt="Logo" style={{ maxWidth: '45%', height: 'auto' }} />
+                    <img src={logoImage} alt="Logo" style={{ maxWidth: '60%', height: 'auto' }} />
                   </div>
                   <CForm>
                     <h1>Welcome!</h1>
-                    <p className="text-light" >Sign In</p>
+                    <p className="text-light" >Vendor Sign In</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
@@ -80,9 +81,9 @@ const Login = () => {
                     <CCol>
                       <CCol>
                       <CButton
-                          color="primary"
-                          className="px-4"
+                          className="px-4 hover-btn"
                           onClick={handleLogin}
+                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}
                         >
                           Login
                         </CButton>
