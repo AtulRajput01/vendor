@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
@@ -18,17 +18,33 @@ import {
 import { useLocation } from 'react-router-dom';
 
 const ExtensionSelect = () => {
+  const [speciesOptions, setSpeciesList] = useState([]);
   const [extensionDetails, setExtensionDetails] = useState({
+    specie: '',
     extensionName: '',
     extensionDescription: '',
     extensionImage: null,
     price: '',
-    shopId:'',
-    role:'vendor'
+    shopId: '',
+    role: 'vendor'
   });
   const location = useLocation();
   const { id } = location.state || {}
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchSpecie(id);
+  }, [id]); // Empty dependency array ensures this runs once after initial render
+
+  const fetchSpecie = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:3002/api/species/getSpecies/${id}`);
+      console.log(response.data.data);
+    setSpeciesList(response.data.data);
+    } catch (error) {
+      console.error('Error in fetching species:', error);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,6 +64,7 @@ const ExtensionSelect = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append('specie', extensionDetails.specie);
     formData.append('extensionName', extensionDetails.extensionName);
     formData.append('extensionDescription', extensionDetails.extensionDescription);
     formData.append('extensionImage', extensionDetails.extensionImage);
@@ -56,7 +73,7 @@ const ExtensionSelect = () => {
     formData.append('role', extensionDetails.role);
 
     try {
-      const response = await axios.post('http://54.244.180.151:3002/api/Extension/addExtension', formData, {
+      const response = await axios.post('http://localhost:3002/api/Extension/addExtension', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -75,7 +92,26 @@ const ExtensionSelect = () => {
             <CCardBody>
               <CForm onSubmit={handleSubmit}>
                 <h1 style={{ color: '#20c997' }}>Extension Registration</h1>
+                <div className='mb-3'>
+                  <CFormLabel htmlFor="extensionName" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                    Specie Name
+                  </CFormLabel>
+                  <CFormInput
+                    id="specie"
+                    name="specie"
+                    value={extensionDetails.specie}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <option value="">Select species</option>
+                  {speciesOptions.map((species) => (
+                    <option key={species.id} value={species.name}>
+                      {species.name}
+                    </option>
+                  ))}
+                </div>
                 <div className="mb-3">
+
                   <CFormLabel htmlFor="extensionName" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
                     Extension Name
                   </CFormLabel>

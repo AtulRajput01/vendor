@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation , Link, useNavigate } from 'react-router-dom';
+import '../../../../src/scss/common.css';
 import {
   CCard,
   CCardBody,
@@ -15,7 +16,7 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilLockLocked } from '@coreui/icons';
-import logoImage from './logo.png';
+import logoImage from '../../../../public/logo/tlogo1.png';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const ResetPassword = () => {
   const handleResetPassword = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://54.244.180.151:3002/api/auths/reset-password', {
+      const response = await fetch('http://localhost:3002/api/auths/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -69,13 +70,14 @@ const ResetPassword = () => {
         <CRow className="justify-content-center">
           <CCol md={20}>
             <CCardGroup className="shadow-lg">
-            <CCard className="p-4 bg-dark-gray" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}>
+            <CCard className="p-4 bg-dark-gray image" style={{ backgroundColor: '#FE3C00'}}>
                 <CCardBody>
                   <CForm>
                   <div className="mb-4 text-center">
                       <img src={logoImage} alt="Logo" style={{ maxWidth: '50%', height: 'auto' }} />
                     </div>
-                    <h3 className="text-center mb-4">Reset Password</h3>
+                    <h3 className="text-center mb-4 text-dark">Reset Password</h3>
+                    <p className="text-light text-center" >Reset your password</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilLockLocked} />
@@ -91,7 +93,7 @@ const ResetPassword = () => {
                     </CInputGroup>
                     <CRow className="justify-content-center">
                       <CCol xs={12} className="text-center">
-                        <CButton color="primary" className="px-4" onClick={handleResetPassword}>
+                        <CButton style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}} className="px-4" onClick={handleResetPassword}>
                         Reset Password
                         </CButton>
                       </CCol>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../../../../src/scss/common.css';
 import {
   CCard,
   CCardBody,
@@ -15,7 +16,7 @@ import CIcon from '@coreui/icons-react';
 import { cilUser, cilMap , cilAt, cilPhone, cilLockLocked} from '@coreui/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import logoImage from './logo.png';
+import logoImage from '../../../../public/logo/tlogo1.png';
 
 
 const Register = () => {
@@ -28,7 +29,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post('http://54.244.180.151:3002/api/auths/Register', {
+      const response = await axios.post('http://localhost:3002/api/auths/Register', {
         name,
         email,
         password,
@@ -49,14 +50,14 @@ const Register = () => {
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={9} lg={7} xl={6}>
-            <CCard className="p-4 bg-dark-gray" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}>
+            <CCard className="p-4 bg-dark-gray image" style={{ backgroundColor: '#FE3C00' }}>
               <CCardBody className="p-4">
                 <CForm>
                   <div className="mb-4 text-center">
                     <img src={logoImage} alt="Logo" style={{ maxWidth: '30%', height: 'auto' }} />
                   </div>
                   <h1 className='text-center'>Register</h1>
-                  <p className="text-body-secondary text-center">Create your account</p>
+                  <p className="text-center text-light">Create your account</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
@@ -108,7 +109,7 @@ const Register = () => {
                   <div className="d-grid">
                   <CCol className='text-center'>
                       <CButton
-                          color="primary"
+                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}
                           className="px-4"
                           onClick={handleRegister}
                         >
