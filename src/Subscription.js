@@ -35,7 +35,7 @@ const Subscription = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await axios.get('http://localhost:3002/api/subscription');
+        const response = await axios.get('http://54.244.180.151:3002/api/subscription');
         setPlans(response.data.data);
       } catch (error) {
         console.error('Error fetching subscription plans:', error);
@@ -142,7 +142,7 @@ const PaymentForm = ({ selectedPlan }) => {
         throw new Error(error.message);
       }
 
-      const response = await axios.post('http://localhost:3002/api/SubscriptionPayment', {
+      const response = await axios.post('http://54.244.180.151:3002/api/SubscriptionPayment', {
         planType: selectedPlan.planType,
         amount: selectedPlan.amount,
         tokenid: token.id,
