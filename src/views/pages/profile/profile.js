@@ -49,7 +49,7 @@ const ProfilePage = () => {
   }, [vendorId]);
 
   const fetchProfile = async (vendorId) => {
-    const response = await axios.get(`http://54.244.180.151:3002/api/vendor/profile/${vendorId}`);
+    const response = await axios.get(`http://localhost:3002/api/vendor/profile/${vendorId}`);
     setProfile(response.data.data);
   };
 
@@ -67,7 +67,7 @@ const ProfilePage = () => {
   };
 
   const handleSaveClick = async () => {
-    await axios.put(`http://54.244.180.151:3002/api/vendor/profile/${vendorId}`, profile)
+    await axios.put(`http://localhost:3002/api/vendor/profile/${vendorId}`, profile)
       .then(response => {
         alert('Profile saved successfully!');
         setEditingFields({
@@ -87,7 +87,7 @@ const ProfilePage = () => {
   };
 
   const handlePasswordSubmit = async () => {
-    await axios.put(`http://54.244.180.151:3002/api/vendor/changePassword/${vendorId}`, passwords)
+    await axios.put(`http://localhost:3002/api/vendor/changePassword/${vendorId}`, passwords)
       .then(response => {
         alert('Password changed successfully!');
         setChangePasswordModal(false);
