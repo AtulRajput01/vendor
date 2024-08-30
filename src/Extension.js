@@ -12,15 +12,14 @@ import {
   CFormInput,
   CFormTextarea,
   CButton,
-  CListGroup,
-  CListGroupItem,
+  CFormSelect
 } from '@coreui/react'; // Adjust imports based on your setup
 import { useLocation } from 'react-router-dom';
 
 const ExtensionSelect = () => {
   const [speciesOptions, setSpeciesList] = useState([]);
   const [extensionDetails, setExtensionDetails] = useState({
-    specie: '',
+    species: '', // Updated state property name
     extensionName: '',
     extensionDescription: '',
     extensionImage: null,
@@ -34,13 +33,12 @@ const ExtensionSelect = () => {
 
   useEffect(() => {
     fetchSpecie(id);
-  }, [id]); // Empty dependency array ensures this runs once after initial render
+  }, [id]);
 
   const fetchSpecie = async (id) => {
     try {
       const response = await axios.get(`http://localhost:3002/api/species/getSpecies/${id}`);
-      console.log(response.data.data);
-    setSpeciesList(response.data.data);
+      setSpeciesList(response.data.data);
     } catch (error) {
       console.error('Error in fetching species:', error);
     }
@@ -64,7 +62,7 @@ const ExtensionSelect = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('specie', extensionDetails.specie);
+    formData.append('specie', extensionDetails.species); // Updated property name
     formData.append('extensionName', extensionDetails.extensionName);
     formData.append('extensionDescription', extensionDetails.extensionDescription);
     formData.append('extensionImage', extensionDetails.extensionImage);
@@ -73,12 +71,12 @@ const ExtensionSelect = () => {
     formData.append('role', extensionDetails.role);
 
     try {
-      const response = await axios.post('http://localhost:3002/api/Extension/addExtension', formData, {
+      await axios.post('http://localhost:3002/api/Extension/addExtension', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      navigate('/Shops')
+      navigate('/Shops');
     } catch (error) {
       console.error('Error adding extension:', error);
     }
@@ -93,25 +91,25 @@ const ExtensionSelect = () => {
               <CForm onSubmit={handleSubmit}>
                 <h1 style={{ color: '#20c997' }}>Extension Registration</h1>
                 <div className='mb-3'>
-                  <CFormLabel htmlFor="extensionName" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                  <CFormLabel htmlFor="species" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
                     Specie Name
                   </CFormLabel>
-                  <CFormInput
-                    id="specie"
-                    name="specie"
-                    value={extensionDetails.specie}
+                  <CFormSelect
+                    id="species"
+                    name="species" // Updated name attribute
+                    value={extensionDetails.species} // Updated value prop
                     onChange={handleInputChange}
                     required
-                  />
-                  <option value="">Select species</option>
-                  {speciesOptions.map((species) => (
-                    <option key={species.id} value={species.name}>
-                      {species.name}
-                    </option>
-                  ))}
+                  >
+                    <option value="">Select species</option>
+                    {speciesOptions.map((species) => (
+                      <option key={species.id} value={species.speciesName}>
+                        {species.speciesName}
+                      </option>
+                    ))}
+                  </CFormSelect>
                 </div>
                 <div className="mb-3">
-
                   <CFormLabel htmlFor="extensionName" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
                     Extension Name
                   </CFormLabel>
@@ -174,7 +172,6 @@ const ExtensionSelect = () => {
           </CCard>
         </CCol>
       </CRow>
-
     </CContainer>
   );
 };
