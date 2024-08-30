@@ -46,8 +46,8 @@ const SpeciesExtensionList = () => {
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>S.No</CTableHeaderCell>
-                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Species Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Species Image</CTableHeaderCell>
+                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Name</CTableHeaderCell>
+                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Image</CTableHeaderCell>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Price</CTableHeaderCell>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Actions</CTableHeaderCell>
               </CTableRow>
@@ -92,8 +92,9 @@ const SpeciesExtensionList = () => {
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>S.No</CTableHeaderCell>
-                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Extension Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Extension Image</CTableHeaderCell>
+                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Specie</CTableHeaderCell>
+                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Name</CTableHeaderCell>
+                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Image</CTableHeaderCell>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Price</CTableHeaderCell>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Actions</CTableHeaderCell>
               </CTableRow>
@@ -107,6 +108,7 @@ const SpeciesExtensionList = () => {
                 extensions.map((extension, index) => (
                   <CTableRow key={extension._id}>
                     <CTableDataCell style={{ textAlign: "center" }}>{index + 1}</CTableDataCell>
+                    <CTableDataCell style={{ textAlign: "center" }}>{extension.specie}</CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>{extension.extensionName}</CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>
                       {extension.image ? (
