@@ -22,7 +22,7 @@ const SpeciesExtensionList = () => {
     setSpecies(response.data.data)
   };
   const fetchExtension=async(shopId)=>{
-    const response = await axios.get(`http://54.244.180.151:3002/api/Extension/getExtension/${shopId}`);
+    const response = await axios.get(`http://54.244.180.151:3002/api/Extension/getByShop/${shopId}`);
     setExtensions(response.data.data)
   };
   const deleteExtension=async(id)=>{
