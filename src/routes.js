@@ -12,6 +12,8 @@ const SubscriptionOverview = React.lazy(() => import('./SubscriptionOverview'));
 const shop=React.lazy(()=> import('./Shops'))
 const SpeciesExtensionList=React.lazy(()=>import('./SpeciesExtensionList'));
 const Profile=React.lazy(()=>import('./views/pages/profile/profile'));
+const SubscriptionPlan = React.lazy(() => import('./SubscriptionPlan'));
+
 
 const routes = [
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -25,6 +27,8 @@ const routes = [
   { path: '/Notifications', name: 'Notifications Page', element: Notifications },
   { path: '/SubscriptionOverview', name: 'Subscrition Overview Page', element: SubscriptionOverview },
   { path: '/listing', name: 'Species and Extensions Listing', element: SpeciesExtensionList },
+  { path: '/SubscriptionPlan', name: 'Subscription Plan', element: SubscriptionPlan },
+
 
 ]
 

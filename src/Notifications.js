@@ -101,7 +101,7 @@ const Notifications = () => {
           </CRow>
         </CCol>
         <CCol md="4">
-          <h2>Send Manual Update</h2>
+          {/* <h2>Send Manual Update</h2>
           <CCard className="bg-light text-dark mb-4">
             <CCardBody>
               <CForm>
@@ -137,9 +137,9 @@ const Notifications = () => {
                 <CButton color="primary" onClick={handleSendNotification}>Send Notification</CButton>
               </CForm>
             </CCardBody>
-          </CCard>
+          </CCard> */}
 
-          <h2>Notification Preferences</h2>
+          {/* <h2>Notification Preferences</h2>
           <CCard className="bg-light text-dark">
             <CCardBody>
               <CForm>
@@ -185,7 +185,7 @@ const Notifications = () => {
                 </div>
               </CForm>
             </CCardBody>
-          </CCard>
+          </CCard> */}
         </CCol>
       </CRow>
     </CContainer>
