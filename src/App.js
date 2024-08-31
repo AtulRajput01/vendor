@@ -24,6 +24,7 @@ const VerifyOTP = React.lazy(() => import('./views/pages/verifyotp/verifyOTP'));
   
 const AuthList = React.lazy(() => import('./AuthList'));
 
+
 const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme');
   const storedTheme = useSelector((state) => state.theme);
@@ -65,6 +66,8 @@ const App = () => {
           <Route exact path="/ShopDetails" name="Shopdetails Page" element={<ShopDetails />} />
           <Route exact path="/Extension" name="Extension Page" element={<Extension />} />
           <Route exact path="/VerifyOTP" name="VerifyOTP Page" element={<VerifyOTP/>} />
+
+
           <Route element={<ProtectedRoute />}>
             <Route path="*" name="Home" element={<DefaultLayout />} />
           </Route>
