@@ -75,7 +75,7 @@ const OrderDetails = () => {
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>S.No</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Booking ID</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>User Name</CTableHeaderCell>
-            {/* <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Shop Name</CTableHeaderCell> */}
+            <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>confirmation Id</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Species Count</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Extensions Count</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Order Date</CTableHeaderCell>
@@ -90,7 +90,7 @@ const OrderDetails = () => {
               <CTableDataCell style={{ textAlign: "center" }}>{index + 1}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{order.bookingId}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{order.userName || 'N/A'}</CTableDataCell>
-              {/* <CTableDataCell style={{ textAlign: "center" }}>{order.shopName || 'N/A'}</CTableDataCell> */}
+              <CTableDataCell style={{ textAlign: "center" }}>{order.confirmationId || 'N/A'}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{order.species.length}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{order.extensions.length}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{new Date(order.orderDate).toLocaleDateString()}</CTableDataCell>
