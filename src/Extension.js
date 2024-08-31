@@ -37,7 +37,7 @@ const ExtensionSelect = () => {
 
   const fetchSpecie = async (id) => {
     try {
-      const response = await axios.get(`http://54.244.180.151:3002/api/species/getSpecies/${id}`);
+      const response = await axios.post(`http://54.244.180.151:3002/api/species/getSpecies/${id}`);
       setSpeciesList(response.data.data);
     } catch (error) {
       console.error('Error in fetching species:', error);
