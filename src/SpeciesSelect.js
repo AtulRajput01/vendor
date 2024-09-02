@@ -13,6 +13,7 @@ import {
   CButton,
   CListGroup,
   CListGroupItem,
+  CSpinner
 } from '@coreui/react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -22,6 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const SpeciesSelect = () => {
   const [speciesList, setSpeciesList] = useState([]);
   const [speciesOptions, setSpeciesOptions] = useState([]);
+  const [ loading, setLoading ] = useState(false);
   const [speciesDetails, setSpeciesDetails] = useState({
     speciesName: '',
     speciesImage: null,
@@ -62,7 +64,7 @@ const SpeciesSelect = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const formData = new FormData();
     formData.append('speciesName', speciesDetails.speciesName);
     formData.append('price', speciesDetails.price);
@@ -95,6 +97,8 @@ const SpeciesSelect = () => {
       navigate('/Shops');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Error adding species');
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -162,8 +166,13 @@ const SpeciesSelect = () => {
                     required
                   />
                 </div>
-                <CButton type="submit" color="primary">
-                  Add Species
+                <CButton
+                  style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }}
+                  className="px-4"
+                  type='submit'
+                  disabled={loading} // Disable button while loading
+                >
+                  {loading ? <CSpinner size="sm" /> : 'Add Species'}
                 </CButton>
               </CForm>
             </CCardBody>

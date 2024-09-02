@@ -11,9 +11,10 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
+  CSpinner // Import CSpinner for the loader
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { cilUser, cilMap , cilAt, cilPhone, cilLockLocked} from '@coreui/icons';
+import { cilUser, cilMap, cilAt, cilPhone, cilLockLocked } from '@coreui/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logoImage from '../../../../public/logo/tlogo1.png';
@@ -26,15 +27,18 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // State to track loading
+
 
   const handleRegister = async () => {
+    setLoading(true); // Show loader when request starts
     try {
       const response = await axios.post('http://54.244.180.151:3002/api/auths/Register', {
         name,
         email,
         password,
         mobileNumber,
-        role:"vendor"
+        role: "vendor"
       });
       setMessage(response.data.message);
       if (response.status === 200) {
@@ -42,6 +46,8 @@ const Register = () => {
       }
     } catch (error) {
       setMessage('Registration failed');
+    } finally {
+      setLoading(false); // Hide loader when request is complete
     }
   };
 
@@ -95,7 +101,7 @@ const Register = () => {
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
-                    <CIcon icon={cilLockLocked} />
+                      <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
                     <CFormInput
                       type="password"
@@ -107,23 +113,24 @@ const Register = () => {
                     />
                   </CInputGroup>
                   <div className="d-grid">
-                  <CCol className='text-center'>
+                    <CCol className='text-center'>
                       <CButton
-                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}
-                          className="px-4"
-                          onClick={handleRegister}
-                        >
-                          Register
+                        style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }}
+                        className="px-4"
+                        onClick={handleRegister}
+                        disabled={loading} // Disable button while loading
+                      >
+                        {loading ? <CSpinner size="sm" /> : 'Register'}
+                      </CButton>
+                    </CCol>
+                    <p>{message}</p>
+                    <CCol className="text-center">
+                      <Link to="/login">
+                        <CButton color="link" className="px-0" style={{ color: "white" }}>
+                          Login
                         </CButton>
-                      </CCol>
-                  <p>{message}</p>
-                  <CCol className="text-center">
-                        <Link to="/login">
-                          <CButton color="link" className="px-0" style={{color:"white"}}>
-                            Login
-                          </CButton>
-                        </Link>
-                      </CCol>
+                      </Link>
+                    </CCol>
                   </div>
                 </CForm>
               </CCardBody>

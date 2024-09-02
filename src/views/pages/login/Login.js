@@ -14,6 +14,7 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
+  CSpinner
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilLockLocked, cilUser } from '@coreui/icons';
@@ -22,9 +23,11 @@ const Login = () => {
   const navigateTo = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
   const handleLogin = async () => {
+    setLoading(true);
     try {
       const response = await axios.post('http://54.244.180.151:3002/api/auths/login', {
         email,
@@ -32,9 +35,11 @@ const Login = () => {
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('vendorID', response.data.data._id);
-      navigateTo('/dashboard');
+      navigateTo('/OrderManage');
     } catch (error) {
       setMessage('Login failed');
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -81,11 +86,12 @@ const Login = () => {
                     <CCol>
                       <CCol>
                       <CButton
-                          className="px-4 hover-btn"
-                          onClick={handleLogin}
-                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}}
+                          onClick = {handleLogin}
+                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }}
+                          className="px-4"
+                          disabled={loading} // Disable button while loading
                         >
-                          Login
+                          {loading ? <CSpinner size="sm" /> : 'Login'} {/* Show loader in button */}
                         </CButton>
                       </CCol>
                       <CCol className="text-right">

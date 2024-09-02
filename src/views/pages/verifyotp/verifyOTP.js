@@ -13,7 +13,8 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-  CCardGroup
+  CCardGroup,
+  CSpinner // Import CSpinner for the loader
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilShieldAlt } from '@coreui/icons';
@@ -22,10 +23,12 @@ import logoImage from '../../../../public/logo/tlogo1.png';
 const VerifyOTP = () => {
   const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // State to track loading
   const navigate = useNavigate();
   
 
   const handleVerifyOTP = async () => {
+    setLoading(true); // Show loader when request starts
     try {
       const response = await axios.post('http://54.244.180.151:3002/api/auths/verify-otp', {otp });
       setMessage(response.data.message);
@@ -35,6 +38,8 @@ const VerifyOTP = () => {
       }
     } catch (error) {
       setMessage("Failed to verify OTP");
+    }finally {
+      setLoading(false); // Hide loader when request is complete
     }
   };
 
@@ -67,11 +72,17 @@ const VerifyOTP = () => {
                     </CInputGroup>
                     <CRow className="justify-content-center">
                       <CCol xs={12} className="text-center">
-                        <CButton style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}} className="px-4" onClick={handleVerifyOTP}>
-                         Send OTP
+                      <CButton
+                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }}
+                          className="px-4"
+                          onClick={handleVerifyOTP}
+                          disabled={loading} // Disable button while loading
+                        >
+                          {loading ? <CSpinner size="sm" /> : 'Send OTP'} {/* Show spinner if loading */}
                         </CButton>
                       </CCol>
                     </CRow>
+                    {message && <p className="text-center text-light mt-3">{message}</p>} {/* Show message if available */}
                   </CForm>
                 </CCardBody>
               </CCard>

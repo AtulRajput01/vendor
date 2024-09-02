@@ -14,7 +14,8 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-  CCardGroup
+  CCardGroup,
+  CSpinner // Import CSpinner for the loader
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilEnvelopeClosed } from '@coreui/icons';
@@ -23,9 +24,11 @@ import logoImage from '../../../../public/logo/tlogo1.png';
 const ForgotPasswordRequest = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // State to track loading
   const navigate = useNavigate();
 
   const handleForgotPassword = async () => {
+    setLoading(true); // Show loader when request starts
     try {
       const response = await axios.post('http://54.244.180.151:3002/api/auths/send-email', { email });
       setMessage(response.data.message);
@@ -34,6 +37,8 @@ const ForgotPasswordRequest = () => {
       }
     } catch (error) {
       setMessage("Failed to send password reset email");
+    }finally {
+      setLoading(false); // Hide loader when request is complete
     }
   };
 
@@ -67,9 +72,18 @@ return (
                   </CInputGroup>
                   <CRow className="justify-content-center">
                     <CCol xs={12} className="text-center">
-                      <CButton style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}} className="px-4" onClick={handleForgotPassword}>
-                       Send OTP
-                      </CButton>
+                    <CButton
+                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }}
+                          className="px-4"
+                          onClick={handleForgotPassword}
+                          disabled={loading} // Disable the button when loading
+                        >
+                          {loading ? (
+                            <CSpinner size="sm" aria-hidden="true" />
+                          ) : (
+                            'Send OTP'
+                          )}
+                        </CButton>
                     </CCol>
                   </CRow>
                 </CForm>

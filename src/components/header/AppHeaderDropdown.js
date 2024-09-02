@@ -14,7 +14,7 @@ import {
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
-import avatar7 from './../../assets/images/avatars/7.jpg'
+import avatar7 from './../../../public/logo/tlogo1.png'
 
 const AppHeaderDropdown = () => {
   const navigateTo = useNavigate();
