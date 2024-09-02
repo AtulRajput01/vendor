@@ -77,7 +77,7 @@ const ChatBox = ({ open, onClose, orderId, senderId, receiverId }) => {
 
     const newMessage = {
       msg: input,
-      timestamp: Date.now(),
+      timeStamp: Date.now(),
       senderId: senderId,
       receiverId: receiverId,
     };
