@@ -32,7 +32,7 @@ const Login = () => {
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('vendorID', response.data.data._id);
-      navigateTo('/dashboard');
+      navigateTo('/OrderManage');
     } catch (error) {
       setMessage('Login failed');
     }
