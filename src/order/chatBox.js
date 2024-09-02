@@ -43,7 +43,7 @@ const FooterContainer = styled('div')({
   width: '100%',
 });
 
-const ChatBox = ({ open, onClose, orderId, senderId, receiverId }) => {
+const ChatBox = ({ open, onClose, orderId, senderId, receiverId,userName }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const chatBodyRef = useRef(null);
@@ -93,7 +93,7 @@ const ChatBox = ({ open, onClose, orderId, senderId, receiverId }) => {
 
   return (
     <ModalWrapper visible={open} onClose={handleClose} className="chat_box animated fadeInUp">
-      <CModalHeader>MESSAGES</CModalHeader>
+      <CModalHeader>{`${userName} : (${orderId})`}</CModalHeader>
       <CModalBody
         id="chatBody"
         style={{

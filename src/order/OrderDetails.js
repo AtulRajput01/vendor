@@ -42,6 +42,8 @@ const OrderDetails = () => {
   const [receiverId, setReceiverId] = useState('');
   const [senderId, setSenderId] = useState('');
   const [orderId, setOrderId] = useState('');
+  const [userName, setUserName] = useState('');
+
 
 
   useEffect(() => {
@@ -70,10 +72,11 @@ const OrderDetails = () => {
   };
 
   const handleChatOpen = (order) => {
-    const { orderId, vendorId, userId } = order;
+    const { orderId, vendorId, userId,userName} = order;
     setOrderId(orderId)
     setSenderId(vendorId)
     setReceiverId(userId)
+    setUserName(userName)
     setChatOpen(true);
   };
 
@@ -268,14 +271,13 @@ const OrderDetails = () => {
         </DialogActions>
       </Dialog>
 
-      {/* <ChatBox open={chatOpen} onClose={handleClose} orderId={orderId} senderId={senderId} receiverId={receiverId} /> */}
-
       <ChatBox 
         open={chatOpen} 
         onClose={handleChatClose} 
         orderId={orderId} 
         senderId={senderId} 
         receiverId={receiverId} 
+        userName={userName}
       />
     </div>
   );
