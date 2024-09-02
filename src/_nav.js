@@ -37,22 +37,14 @@ const _nav = [
     component: CNavItem,
     name: 'Order Management',
     to: '/OrderManage',
-    icon: <CIcon icon={cilCart} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      
-    },
+    icon: <CIcon icon={cilCart} customClassName="nav-icon" />
   },
 
   {
     component: CNavItem,
     name: 'Notifications',
     to: '/Notifications',
-    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      
-    },
+    icon: <CIcon icon={cilBell} customClassName="nav-icon" />
   },
 
   // {
@@ -69,22 +61,14 @@ const _nav = [
     component: CNavItem,
     name: 'Shops Management',
     to: '/Shops',
-    icon: <CIcon icon={cilBriefcase} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      
-    },
+    icon: <CIcon icon={cilBriefcase} customClassName="nav-icon" />
   },
 
   {
     component: CNavItem,
     name: 'Subscription Plan',
     to: '/SubscriptionPlan',
-    icon: <CIcon icon={cilMoney} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      
-    },
+    icon: <CIcon icon={cilMoney} customClassName="nav-icon" />
   },
 
   // {

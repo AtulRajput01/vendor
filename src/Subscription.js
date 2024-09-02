@@ -11,7 +11,7 @@ import {
   CButton,
   CModal,
   CModalBody,
-  CModalFooter  
+  CModalFooter
 } from '@coreui/react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardNumberElement, CardExpiryElement, CardCvcElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -73,7 +73,7 @@ const Subscription = () => {
                           <li key={index}>{feature}</li>
                         ))}
                       </ul>
-                      <CButton color="secondary" onClick={() => handleChoosePlan(plan.name, plan.price)}>Choose Plan</CButton>
+                      <CButton color="secondary" onClick={() => handleChoosePlan(plan.name, plan.price)} disabled = { selectedPlan !== null && selectedPlan.planType === plan.name }>Choose Plan</CButton>
                     </CCardBody>
                   </CCard>
                 </CCol>

@@ -12,6 +12,7 @@ import {
   CFormTextarea,
   CButton,
   CFormSelect,
+  CSpinner, // Import CSpinner for the loader
 } from '@coreui/react';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +31,7 @@ const ShopDetails = () => {
     address: '',
     vendorId: ''
   });
-
+  const [loading, setLoading] = useState(false); // Loader state
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -50,6 +51,7 @@ const ShopDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formData = new FormData();
     formData.append('shopName', shopDetails.shopName);
@@ -86,9 +88,11 @@ const ShopDetails = () => {
         address: '',
         vendorId: ''
       });
-      navigate('/Subscription',{state:{shopId:response.data.shopDetails._id}});
+      navigate('/Subscription', { state: { shopId: response.data.shopDetails._id } });
     } catch (error) {
       console.error('Error creating shop details:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,7 +104,7 @@ const ShopDetails = () => {
             <CCardBody>
               <CForm onSubmit={handleSubmit} style={{ padding: '0.5rem' }}>
                 <h2 style={{ color: '#20c997', textAlign: 'center', fontSize: '1.5rem' }}>Shop Registration</h2>
-                
+
                 {/* Shop Name */}
                 <div className="mb-2">
                   <CFormLabel htmlFor="shopName" style={{ fontSize: '0.875rem' }}>Shop Name</CFormLabel>
@@ -115,7 +119,7 @@ const ShopDetails = () => {
                     style={{ fontSize: '0.875rem', height: '2rem' }}
                   />
                 </div>
-                
+
                 <div className="mb-2">
                   <CFormLabel htmlFor="shopDescription" style={{ fontSize: '0.875rem' }}>Shop Description</CFormLabel>
                   <CFormTextarea
@@ -250,7 +254,14 @@ const ShopDetails = () => {
                   />
                 </div>
 
-                <CButton type="submit" color="primary" style={{ fontSize: '0.875rem', height: '2.5rem' }}>Submit</CButton>
+                <CButton
+                  style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }}
+                  className="px-4"
+                  type='submit'
+                  disabled={loading} // Disable button while loading
+                >
+                  {loading ? <CSpinner size="sm" /> : 'Submit'}
+                </CButton>
               </CForm>
               {/* <div className="mt-2">
                 <CButton color="secondary" style={{ fontSize: '0.875rem', height: '2.5rem' }}>Book an Appointment</CButton>

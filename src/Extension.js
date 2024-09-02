@@ -12,7 +12,8 @@ import {
   CFormInput,
   CFormTextarea,
   CButton,
-  CFormSelect
+  CFormSelect,
+  CSpinner, // Import CSpinner for the loader
 } from '@coreui/react'; // Adjust imports based on your setup
 import { useLocation } from 'react-router-dom';
 
@@ -27,6 +28,7 @@ const ExtensionSelect = () => {
     shopId: '',
     role: 'vendor'
   });
+  const [loading, setLoading] = useState(false); // Loader state
   const location = useLocation();
   const { id } = location.state || {}
   const navigate = useNavigate();
@@ -36,11 +38,15 @@ const ExtensionSelect = () => {
   }, [id]);
 
   const fetchSpecie = async (id) => {
+    setLoading(true);
     try {
       const response = await axios.post(`http://54.244.180.151:3002/api/species/getSpecies/${id}`);
       setSpeciesList(response.data.data);
     } catch (error) {
       console.error('Error in fetching species:', error);
+    }
+    finally {
+      setLoading(false); // Stop loader after fetching
     }
   };
 
@@ -61,6 +67,7 @@ const ExtensionSelect = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loader when submitting the form
     const formData = new FormData();
     formData.append('specie', extensionDetails.species); // Updated property name
     formData.append('extensionName', extensionDetails.extensionName);
@@ -79,6 +86,8 @@ const ExtensionSelect = () => {
       navigate('/Shops');
     } catch (error) {
       console.error('Error adding extension:', error);
+    }finally {
+      setLoading(false); // Stop loader after submission
     }
   };
 
@@ -88,85 +97,93 @@ const ExtensionSelect = () => {
         <CCol md="8">
           <CCard>
             <CCardBody>
-              <CForm onSubmit={handleSubmit}>
+            <CForm onSubmit={handleSubmit}>
                 <h1 style={{ color: '#20c997' }}>Extension Registration</h1>
-                <div className='mb-3'>
-                  <CFormLabel htmlFor="species" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
-                    Specie Name
-                  </CFormLabel>
-                  <CFormSelect
-                    id="species"
-                    name="species" // Updated name attribute
-                    value={extensionDetails.species} // Updated value prop
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select species</option>
-                    {speciesOptions.map((species) => (
-                      <option key={species.id} value={species.speciesName}>
-                        {species.speciesName}
-                      </option>
-                    ))}
-                  </CFormSelect>
-                </div>
-                <div className="mb-3">
-                  <CFormLabel htmlFor="extensionName" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
-                    Extension Name
-                  </CFormLabel>
-                  <CFormInput
-                    type="text"
-                    id="extensionName"
-                    name="extensionName"
-                    placeholder="Enter extension name"
-                    value={extensionDetails.extensionName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <CFormLabel htmlFor="extensionDescription" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
-                    Extension Description
-                  </CFormLabel>
-                  <CFormTextarea
-                    id="extensionDescription"
-                    name="extensionDescription"
-                    rows="4"
-                    placeholder="Enter extension description"
-                    value={extensionDetails.extensionDescription}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <CFormLabel htmlFor="extensionImage" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
-                    Extension Image
-                  </CFormLabel>
-                  <CFormInput
-                    type="file"
-                    id="extensionImage"
-                    name="extensionImage"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <CFormLabel htmlFor="price" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
-                    Price
-                  </CFormLabel>
-                  <CFormInput
-                    type="number"
-                    id="price"
-                    name="price"
-                    placeholder="Enter price"
-                    value={extensionDetails.price}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <CButton type="submit" color="primary">
-                  Add Extension
-                </CButton>
+                {loading ? (
+                  <div className="text-center">
+                    <CSpinner color="primary" /> {/* Loader */}
+                  </div>
+                ) : (
+                  <>
+                    <div className='mb-3'>
+                      <CFormLabel htmlFor="species" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                        Specie Name
+                      </CFormLabel>
+                      <CFormSelect
+                        id="species"
+                        name="species"
+                        value={extensionDetails.species}
+                        onChange={handleInputChange}
+                        required
+                      >
+                        <option value="">Select species</option>
+                        {speciesOptions.map((species) => (
+                          <option key={species.id} value={species.speciesName}>
+                            {species.speciesName}
+                          </option>
+                        ))}
+                      </CFormSelect>
+                    </div>
+                    <div className="mb-3">
+                      <CFormLabel htmlFor="extensionName" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                        Extension Name
+                      </CFormLabel>
+                      <CFormInput
+                        type="text"
+                        id="extensionName"
+                        name="extensionName"
+                        placeholder="Enter extension name"
+                        value={extensionDetails.extensionName}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <CFormLabel htmlFor="extensionDescription" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                        Extension Description
+                      </CFormLabel>
+                      <CFormTextarea
+                        id="extensionDescription"
+                        name="extensionDescription"
+                        rows="4"
+                        placeholder="Enter extension description"
+                        value={extensionDetails.extensionDescription}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <CFormLabel htmlFor="extensionImage" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                        Extension Image
+                      </CFormLabel>
+                      <CFormInput
+                        type="file"
+                        id="extensionImage"
+                        name="extensionImage"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <CFormLabel htmlFor="price" style={{ color: 'chocolate', fontStyle: 'inherit' }}>
+                        Price
+                      </CFormLabel>
+                      <CFormInput
+                        type="number"
+                        id="price"
+                        name="price"
+                        placeholder="Enter price"
+                        value={extensionDetails.price}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <CButton type="submit" color="primary">
+                      Add Extension
+                    </CButton>
+                  </>
+                )}
               </CForm>
             </CCardBody>
           </CCard>

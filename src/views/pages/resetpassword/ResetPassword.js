@@ -12,7 +12,8 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-  CCardGroup
+  CCardGroup,
+  CSpinner // Import CSpinner for the loader
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilLockLocked } from '@coreui/icons';
@@ -93,8 +94,13 @@ const ResetPassword = () => {
                     </CInputGroup>
                     <CRow className="justify-content-center">
                       <CCol xs={12} className="text-center">
-                        <CButton style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}} className="px-4" onClick={handleResetPassword}>
-                        Reset Password
+                      <CButton
+                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }}
+                          className="px-4"
+                          onClick={handleResetPassword}
+                          disabled={loading} // Disable button while loading
+                        >
+                          {loading ? <CSpinner size="sm" /> : 'Reset Password'} {/* Show spinner if loading */}
                         </CButton>
                       </CCol>
                     </CRow>

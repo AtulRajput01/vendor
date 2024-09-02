@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton } from '@coreui/react';
+import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton, CSpinner } from '@coreui/react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEye, faCirclePlus, faPuzzlePiece, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 const Shops = () => {
     const [shops, setShops] = useState([]);
+    const [loading, setLoading] = useState(true); // Loader state
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,13 +20,26 @@ const Shops = () => {
 
     const fetchShop = async () => {
         const vendorId = localStorage.getItem('vendorID');
-        const response = await axios.get(`http://54.244.180.151:3002/api/ShopDetails/shop/${vendorId}`);
-        setShops(response.data);
+        try {
+            const response = await axios.get(`http://54.244.180.151:3002/api/ShopDetails/shop/${vendorId}`);
+            setShops(response.data);
+        } catch (error) {
+            console.error('Error fetching shops:', error);
+        } finally {
+            setLoading(false); // Stop loading after data fetch or error
+        }
     };
 
     const handleDelete = async (id) => {
-        await axios.delete(`http://54.244.180.151:3002/api/ShopDetails/deleteShop/${id}`);
-        fetchShop();
+        setLoading(true); // Start loading during delete operation
+        try {
+            await axios.delete(`http://54.244.180.151:3002/api/ShopDetails/deleteShop/${id}`);
+            fetchShop();
+        } catch (error) {
+            console.error('Error deleting shop:', error);
+        } finally {
+            setLoading(false); // Stop loading after delete operation
+        }
     };
 
     const handleViewClick = async (shopId) => {
@@ -48,8 +62,13 @@ const Shops = () => {
         <div className="container mt-4">
             <div className='d-flex justify-content-between'>
                 <h4>Subscription Listings</h4>
-                <CButton style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white'}} className="px-4" onClick={handleClick}>Add Shops</CButton>
+                <CButton style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }} className="px-4" onClick={handleClick}>Add Shops</CButton>
             </div>
+             {loading ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
+                    <CSpinner color="primary" size="lg" />
+                </div>
+            ) : (
             <CTable className="table mt-3">
                 <CTableHead>
                     <CTableRow>
@@ -74,7 +93,7 @@ const Shops = () => {
                             </CTableDataCell>
 
                             <CTableDataCell style={{ textAlign: "center" }}>
-                                {shop.planExpiryDate.split('T')[0]}
+                                {shop.planExpiryDate ? shop.planExpiryDate.split('T')[0] : null}
                             </CTableDataCell>
 
                             <CTableDataCell className='text-center'>
@@ -140,6 +159,7 @@ const Shops = () => {
                     ))}
                 </CTableBody>
             </CTable>
+            )}
         </div>
     );
 };
