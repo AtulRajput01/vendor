@@ -62,7 +62,7 @@ const Shops = () => {
         <div className="container mt-4">
             <div className='d-flex justify-content-between'>
                 <h4>Subscription Listings</h4>
-                <CButton style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }} className="px-4" onClick={handleClick}>Add Shops</CButton>
+                <CButton style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }} className="px-4" onClick={handleClick}>Add Subscription</CButton>
             </div>
              {loading ? (
                 <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>

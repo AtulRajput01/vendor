@@ -21,7 +21,7 @@ import {
 import { cilPencil, cilSave, cilXCircle } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
 import '@coreui/coreui/dist/css/coreui.min.css';
-import avatar7 from './../../../assets/images/avatars/7.jpg';
+import avatar7 from '../../../../public/logo/tlogo1.png';
 import './profile.css';
 
 const ProfilePage = () => {
