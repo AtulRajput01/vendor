@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell } from '@coreui/react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faEye , faTruck,faBoxOpen,faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faEye, faTruck, faBoxOpen, faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -11,7 +11,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
+import ChatBox from './chatBox';
 const Image = styled('img')({
   width: '100px',
   height: 'auto',
@@ -38,6 +38,11 @@ const OrderDetails = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [open, setOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [receiverId, setReceiverId] = useState('');
+  const [senderId, setSenderId] = useState('');
+  const [orderId, setOrderId] = useState('');
+
 
   useEffect(() => {
     fetchOrders();
@@ -49,8 +54,8 @@ const OrderDetails = () => {
     setOrders(response.data.data);
   };
 
-  const handleConfirmOrder = async (id,status) => {
-    await axios.put(`http://54.244.180.151:3002/api/order/${id}`,{status});
+  const handleConfirmOrder = async (id, status) => {
+    await axios.put(`http://54.244.180.151:3002/api/order/${id}`, { status });
     fetchOrders();
   };
 
@@ -62,6 +67,19 @@ const OrderDetails = () => {
   const handleClose = () => {
     setOpen(false);
     setSelectedOrder(null);
+  };
+
+  const handleChatOpen = (order) => {
+    const { orderId, vendorId, userId } = order;
+    setOrderId(orderId)
+    setSenderId(vendorId)
+    setReceiverId(userId)
+    setChatOpen(true);
+  };
+
+  const handleChatClose = () => {
+    setChatOpen(false);
+    setOrderId(null);
   };
 
   return (
@@ -76,8 +94,6 @@ const OrderDetails = () => {
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Booking ID</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>User Name</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>confirmation Id</CTableHeaderCell>
-            <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Species Count</CTableHeaderCell>
-            <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Extensions Count</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Order Date</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Payment Status</CTableHeaderCell>
             <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Total Amount</CTableHeaderCell>
@@ -91,53 +107,59 @@ const OrderDetails = () => {
               <CTableDataCell style={{ textAlign: "center" }}>{order.bookingId}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{order.userName || 'N/A'}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{order.confirmationId || 'N/A'}</CTableDataCell>
-              <CTableDataCell style={{ textAlign: "center" }}>{order.species.length}</CTableDataCell>
-              <CTableDataCell style={{ textAlign: "center" }}>{order.extensions.length}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{new Date(order.orderDate).toLocaleDateString()}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{order.paymentStatus}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>${order.totalAmount}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>
-              {order.status === 'pending' && (
-                    <Tooltip title="Confirm Order">
-                      <button
-                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                        onClick={() => handleConfirmOrder(order.orderId ,'confirmed')}
-                      >
-                        <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#28a745", fontSize: '20px' }} />
-                      </button>
-                    </Tooltip>
-                  )}
-                  {order.status === 'confirmed' && (
-                    <Tooltip title="Ship Order">
-                      <button
-                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                        onClick={() => handleConfirmOrder(order.orderId ,'shipped')}
-                      >
-                        <FontAwesomeIcon icon={faTruck} style={{ color: "#007bff", fontSize: '20px' }} />
-                      </button>
-                    </Tooltip>
-                  )}
-                  {order.status === 'shipped' && (
-                    <Tooltip title="Deliver Order">
-                      <button
-                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                        onClick={() => handleConfirmOrder(order.orderId , 'delivered')}
-                      >
-                        <FontAwesomeIcon icon={faBoxOpen} style={{ color: "#ffc107", fontSize: '20px' }} />
-                      </button>
-                    </Tooltip>
-                  )}
-                 {order.status === 'delivered' && (
-                    <span style={{ color: "#28a745", fontSize: '16px', fontWeight: 'bold' }}>
-                      Delivered
-                    </span>
-                  )}
+                {order.status === 'pending' && (
+                  <Tooltip title="Confirm Order">
+                    <button
+                      style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                      onClick={() => handleConfirmOrder(order.orderId, 'confirmed')}
+                    >
+                      <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#28a745", fontSize: '20px' }} />
+                    </button>
+                  </Tooltip>
+                )}
+                {order.status === 'confirmed' && (
+                  <Tooltip title="Ship Order">
+                    <button
+                      style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                      onClick={() => handleConfirmOrder(order.orderId, 'shipped')}
+                    >
+                      <FontAwesomeIcon icon={faTruck} style={{ color: "#007bff", fontSize: '20px' }} />
+                    </button>
+                  </Tooltip>
+                )}
+                {order.status === 'shipped' && (
+                  <Tooltip title="Deliver Order">
+                    <button
+                      style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                      onClick={() => handleConfirmOrder(order.orderId, 'delivered')}
+                    >
+                      <FontAwesomeIcon icon={faBoxOpen} style={{ color: "#ffc107", fontSize: '20px' }} />
+                    </button>
+                  </Tooltip>
+                )}
+                {order.status === 'delivered' && (
+                  <span style={{ color: "#28a745", fontSize: '16px', fontWeight: 'bold' }}>
+                    Delivered
+                  </span>
+                )}
                 <Tooltip title="View Order">
                   <button
                     style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer', marginLeft: '10px' }}
                     onClick={() => handleViewOrder(order)}
                   >
                     <FontAwesomeIcon icon={faEye} style={{ color: "#007bff", fontSize: '20px' }} />
+                  </button>
+                </Tooltip>
+                <Tooltip title="Chat">
+                  <button
+                    style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer', marginLeft: '10px' }}
+                    onClick={() => handleChatOpen(order)}
+                  >
+                    <FontAwesomeIcon icon={faCommentDots} style={{ color: "#007bff", fontSize: '20px' }} />
                   </button>
                 </Tooltip>
               </CTableDataCell>
@@ -245,6 +267,16 @@ const OrderDetails = () => {
           <Button onClick={handleClose} color="primary">Close</Button>
         </DialogActions>
       </Dialog>
+
+      {/* <ChatBox open={chatOpen} onClose={handleClose} orderId={orderId} senderId={senderId} receiverId={receiverId} /> */}
+
+      <ChatBox 
+        open={chatOpen} 
+        onClose={handleChatClose} 
+        orderId={orderId} 
+        senderId={senderId} 
+        receiverId={receiverId} 
+      />
     </div>
   );
 };

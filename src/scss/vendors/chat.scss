@@ -1,0 +1,13 @@
+.chat_box {
+  .chat_box_body_self {
+    align-self: flex-end;
+    background-color: #e0f7fa;
+    text-align: right;
+  }
+
+  .chat_box_body_other {
+    align-self: flex-start;
+    background-color: #ffffff;
+    text-align: left;
+  }
+}
