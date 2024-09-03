@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton } from '@coreui/react';
+import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell, CButton, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter } from '@coreui/react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPen,faCirclePlus,faPuzzlePiece  } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPen, faCirclePlus, faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
 
 const SpeciesExtensionList = () => {
   const [species, setSpecies] = useState([]);
   const [extensions, setExtensions] = useState([]);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
 
   const location = useLocation();
   const { shopId } = location.state || {}
@@ -17,20 +20,35 @@ const SpeciesExtensionList = () => {
     fetchExtension(shopId);
   }, [shopId]);
 
-  const fetchSpecies=async(shopId)=>{
+  const fetchSpecies = async (shopId) => {
     const response = await axios.post(`http://54.244.180.151:3002/api/species/getSpecies/${shopId}`);
     setSpecies(response.data.data)
   };
-  const fetchExtension=async(shopId)=>{
+  const fetchExtension = async (shopId) => {
     const response = await axios.post(`http://54.244.180.151:3002/api/Extension/getByShop/${shopId}`);
     setExtensions(response.data.data)
   };
-  const deleteExtension=async(id)=>{
+  const deleteExtension = async (id) => {
     const response = await axios.delete(`http://54.244.180.151:3002/api/Extension/deleteExten/${id}`);
     fetchExtension(shopId);
   }
 
-  const deleteSpecies=async(id)=>{
+  const handleEditClick = (item) => {
+    setSelectedItem(item);
+    setEditModalOpen(true);
+  };
+
+  const handleEditSubmit = async () => {
+    const apiUrl = selectedItem.speciesName ? `http://54.244.180.151:3002/api/species/updateSpecies/${selectedItem._id}` : `http://54.244.180.151:3002/api/Extension/updateExtension/${selectedItem._id}`;
+    const response = await axios.put(apiUrl, selectedItem);
+
+    if (response.status === 200) {
+      setEditModalOpen(false);
+      selectedItem.speciesName ? fetchSpecies(shopId) : fetchExtension(shopId);
+    }
+  };
+
+  const deleteSpecies = async (id) => {
     const response = await axios.delete(`http://54.244.180.151:3002/api/species/deleteSpecies/${id}`);
     fetchSpecies(shopId);
   }
@@ -72,12 +90,19 @@ const SpeciesExtensionList = () => {
                       {/* <CButton style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
                       <FontAwesomeIcon icon={faPen} style={{ color: "#74C0FC", fontSize: '20px' }} />
                       </CButton> */}
+                      {/* Edit Button */}
+                      <button
+                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                        onClick={() => handleEditClick(specie._id)}
+                      >
+                        <FontAwesomeIcon icon={faPen} style={{ fontSize: '15px', marginRight: '10px' }} />
+                      </button>
                       <button
                         style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
                         onClick={() => deleteSpecies(specie._id)}
-                        >
+                      >
                         <FontAwesomeIcon icon={faTrash} style={{ color: "#fd2b2b", fontSize: '20px' }} />
-                        </button>
+                      </button>
                     </CTableDataCell>
                   </CTableRow>
                 ))
@@ -119,18 +144,46 @@ const SpeciesExtensionList = () => {
                     <CTableDataCell style={{ textAlign: "center" }}>
                       <button
                         style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
+                        onClick={() => handleEditClick(extension._id)}
+                      >
+                        <FontAwesomeIcon icon={faPen} style={{ fontSize: '15px', marginRight: '10px' }} />
+                      </button>
+                      <button
+                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
                         onClick={() => deleteExtension(extension._id)}
-                        >
+                      >
                         <FontAwesomeIcon icon={faTrash} style={{ color: "#fd2b2b", fontSize: '20px' }} />
-                        </button>
+                      </button>
                     </CTableDataCell>
                   </CTableRow>
                 ))
               )}
             </CTableBody>
           </CTable>
+
         </div>
       </div>
+      <CModal visible={editModalOpen} onClose={() => setEditModalOpen(false)}>
+            <CModalHeader>
+              <CModalTitle>Edit Item</CModalTitle>
+            </CModalHeader>
+            <CModalBody>
+              {/* Add form fields here */}
+              <div>
+                <label>Name</label>
+                <input
+                  type="text"
+                  value={selectedItem ? selectedItem.speciesName || selectedItem.extensionName : ''}
+                  onChange={(e) => setSelectedItem({ ...selectedItem, speciesName: e.target.value })}
+                />
+              </div>
+              {/* Add other fields like Image, Price, etc. */}
+            </CModalBody>
+            <CModalFooter>
+              <CButton color="secondary" onClick={() => setEditModalOpen(false)}>Cancel</CButton>
+              <CButton color="primary" onClick={handleEditSubmit}>Save</CButton>
+            </CModalFooter>
+          </CModal>
     </div>
   );
 };

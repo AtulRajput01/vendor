@@ -13,6 +13,8 @@ const shop=React.lazy(()=> import('./Shops'))
 const SpeciesExtensionList=React.lazy(()=>import('./SpeciesExtensionList'));
 const Profile=React.lazy(()=>import('./views/pages/profile/profile'));
 const SubscriptionPlan = React.lazy(() => import('./SubscriptionPlan'));
+const PastOrders = React.lazy(() => import('./order/PastOrders'));
+
 
 
 const routes = [
@@ -20,6 +22,7 @@ const routes = [
   
   { path: '/OrderManage', name: 'Order Manage Page', element: OrderManage },
   { path: '/OrderDetails', name: 'Order Details Page', element: OrderDetails },
+  { path: '/PastOrders', name: 'Past Orders', element: PastOrders },
   { path: '/BillingInfo', name: 'Billing Info Page', element: BillingInfo },
   { path: '/OrderStatusTrack', name: 'Order Status Tracking Page', element: OrderStatusTrack },
   { path: '/shops', name: 'Shop Info Page', element: shop },
