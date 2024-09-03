@@ -18,20 +18,20 @@ const SpeciesExtensionList = () => {
   useEffect(() => {
     fetchSpecies(shopId);
     fetchExtension(shopId);
-  }, [shopId]);54.244.180.151
+  }, [shopId]);
 
   const fetchSpecies = async (shopId) => {
     const response = await axios.post(`http://54.244.180.151:3002/api/species/getSpecies/${shopId}`);
-    setSpecies(response.data.data)54.244.180.151
+    setSpecies(response.data.data)
   };
   const fetchExtension = async (shopId) => {
     const response = await axios.post(`http://54.244.180.151:3002/api/Extension/getByShop/${shopId}`);
-    setExtensions(response.data.data)54.244.180.151
+    setExtensions(response.data.data)
   };
   const deleteExtension = async (id) => {
     const response = await axios.delete(`http://54.244.180.151:3002/api/Extension/deleteExten/${id}`);
     fetchExtension(shopId);
-  }54.244.180.151
+  }
 
   const handleEditClick = (item) => {
     setSelectedItem(item);
@@ -64,7 +64,7 @@ const SpeciesExtensionList = () => {
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>S.No</CTableHeaderCell>
-                <CTableHeaderCell scope="c54.244.180.151extAlign: "center" }}>Name</CTableHeaderCell>
+                <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Image</CTableHeaderCell>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Price</CTableHeaderCell>
                 <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Actions</CTableHeaderCell>
@@ -112,7 +112,7 @@ const SpeciesExtensionList = () => {
         </div>
 
         <div className="table" style={{ flex: '1', marginLeft: '10px' }}>
-          <h5>Extensions</h5>54.244.180.151
+          <h5>Extensions</h5>
           <CTable className="table">
             <CTableHead>
               <CTableRow>
