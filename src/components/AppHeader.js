@@ -93,7 +93,7 @@ const AppHeader = () => {
               ) : (
                 <CIcon icon={cilSun} size="lg" />
               )} */}
-              <CIcon icon={cilSun} size="lg" />
+              {/* <CIcon icon={cilSun} size="lg" /> */}
             </CDropdownToggle>
             <CDropdownMenu>
               {/* Replace with appropriate logic for color mode */}

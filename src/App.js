@@ -21,6 +21,7 @@ const ShopDetails = React.lazy(() => import('./ShopDetails'));
 const SpeciesSelect = React.lazy(() => import('./SpeciesSelect'));
 const Extension = React.lazy(() => import('./Extension'));
 const VerifyOTP = React.lazy(() => import('./views/pages/verifyotp/verifyOTP'));
+const PendingApproval = React.lazy(() => import('./../src/Logincheck'));
   
 const AuthList = React.lazy(() => import('./AuthList'));
 
@@ -66,7 +67,7 @@ const App = () => {
           <Route exact path="/ShopDetails" name="Shopdetails Page" element={<ShopDetails />} />
           <Route exact path="/Extension" name="Extension Page" element={<Extension />} />
           <Route exact path="/VerifyOTP" name="VerifyOTP Page" element={<VerifyOTP/>} />
-
+          <Route exact path="/PendingApproval" name="Pending Approval" element={<PendingApproval/>} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="*" name="Home" element={<DefaultLayout />} />
