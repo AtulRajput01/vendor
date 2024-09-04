@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import {
   CContainer,
@@ -11,8 +11,8 @@ import {
   CFormInput,
   CFormTextarea,
   CButton,
-  CFormSelect,
   CSpinner,
+  CFormCheck,
 } from '@coreui/react';
 import { useNavigate } from 'react-router-dom';
 import { LoadScript, Autocomplete } from '@react-google-maps/api';
@@ -27,14 +27,13 @@ const ShopDetails = () => {
     ownerEmail: '',
     contactNumber: '',
     availableFrom: '',
-    availableFromPeriod: 'AM',
     availableTo: '',
-    availableToPeriod: 'PM',
     shopLogo: null,
     address: '',
     latitude: '',
     longitude: '',
-    vendorId: ''
+    vendorId: '',
+    takeAppointment: false, // Added for checkbox state
   });
 
   const [loading, setLoading] = useState(false);
@@ -70,16 +69,24 @@ const ShopDetails = () => {
     });
   };
 
-  const handleAppointmentTime = () => {
-    const now = new Date();
-    const availableFrom = now.toISOString().slice(0, 16); // Current time formatted as "YYYY-MM-DDTHH:mm"
-    const availableTo = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString().slice(0, 16); // 24 hours from now
+  const handleCheckboxChange = (e) => {
+    const { checked } = e.target;
+    setShopDetails((prevState) => ({
+      ...prevState,
+      takeAppointment: checked,
+    }));
 
-    setShopDetails({
-      ...shopDetails,
-      availableFrom: availableFrom,
-      availableTo: availableTo,
-    });
+    if (checked) {
+      const now = new Date();
+      const availableFrom =''
+      const availableTo = '' 
+
+      setShopDetails((prevState) => ({
+        ...prevState,
+        availableFrom,
+        availableTo,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -93,9 +100,7 @@ const ShopDetails = () => {
     formData.append('ownerEmail', shopDetails.ownerEmail);
     formData.append('contactNumber', shopDetails.contactNumber);
     formData.append('availableFrom', shopDetails.availableFrom);
-    formData.append('availableFromPeriod', shopDetails.availableFromPeriod);
     formData.append('availableTo', shopDetails.availableTo);
-    formData.append('availableToPeriod', shopDetails.availableToPeriod);
     formData.append('address', shopDetails.address);
     formData.append('latitude', shopDetails.latitude);
     formData.append('longitude', shopDetails.longitude);
@@ -116,14 +121,13 @@ const ShopDetails = () => {
         ownerEmail: '',
         contactNumber: '',
         availableFrom: '',
-        availableFromPeriod: 'AM',
         availableTo: '',
-        availableToPeriod: 'PM',
         shopLogo: null,
         address: '',
         latitude: '',
         longitude: '',
-        vendorId: ''
+        vendorId: '',
+        takeAppointment: false,
       });
       navigate('/Subscription', { state: { shopId: response.data.shopDetails._id } });
     } catch (error) {
@@ -226,93 +230,57 @@ const ShopDetails = () => {
                   </div>
 
                   <div className="mb-2">
-                      <CFormLabel htmlFor="time" style={{ fontSize: '0.875rem' }}>Appointment</CFormLabel>
-                      <CFormInput
-                        type="checkbox"
-                        id="contactNumber"
-                        name="contactNumber"
-                        placeholder="Enter contact number"
-                        value={shopDetails.contactNumber}
-                        onChange={handleInputChange}
-                        style={{ fontSize: '0.875rem', height: '2rem' }}
-                      />
-                      <CFormInput
-                        type="checkbox"
-                        id="contactNumber"
-                        name="contactNumber"
-                        placeholder="Enter contact number"
-                        value={shopDetails.contactNumber}
-                        onChange={handleInputChange}
-                        style={{ fontSize: '0.875rem', height: '2rem' }}
-                      />
-                    </div>
-                    
-                  <div className="mb-2">
-                    <CFormLabel htmlFor="availableFrom" style={{ fontSize: '0.875rem' }}>Available From</CFormLabel>
-                    <div className="d-flex">
-                      <CFormInput
-                        type="time"
-                        id="availableFrom"
-                        name="availableFrom"
-                        value={shopDetails.availableFrom}
-                        onChange={handleInputChange}
-                        style={{ fontSize: '0.875rem', height: '2rem', flex: 1 }}
-                      />
-                      <CFormSelect
-                        id="availableFromPeriod"
-                        name="availableFromPeriod"
-                        value={shopDetails.availableFromPeriod}
-                        onChange={handleInputChange}
-                        style={{ fontSize: '0.875rem', height: '2rem', width: 'auto', flexShrink: 0 }}
-                      >
-                        <option value="AM">AM</option>
-                        <option value="PM">PM</option>
-                      </CFormSelect>
-                    </div>
+                    <CFormCheck
+                      id="takeAppointment"
+                      name="takeAppointment"
+                      label="Appointment not required"
+                      checked={shopDetails.takeAppointment}
+                      onChange={handleCheckboxChange}
+                      style={{ fontSize: '0.875rem' }}
+                    />
                   </div>
 
-                  {/* Book Appointment Button */}
-                  <div className="mb-2">
-                    <CButton color="primary" onClick={handleAppointmentTime}>
-                      Book Appointment
-                    </CButton>
-                  </div>
+                  {!shopDetails.takeAppointment && (
+                    <>
+                      <div className="mb-2 d-flex">
+                        <div className="flex-grow-1 me-2">
+                          <CFormLabel htmlFor="availableFrom" style={{ fontSize: '0.875rem' }}>Available From</CFormLabel>
+                          <CFormInput
+                            type="time"
+                            id="availableFrom"
+                            name="availableFrom"
+                            value={shopDetails.availableFrom}
+                            onChange={handleInputChange}
+                            required
+                            style={{ fontSize: '0.875rem', height: '2rem' }}
+                          />
+                        </div>
+                        <div className="flex-grow-1 ms-2">
+                          <CFormLabel htmlFor="availableTo" style={{ fontSize: '0.875rem' }}>Available To</CFormLabel>
+                          <CFormInput
+                            type="time"
+                            id="availableTo"
+                            name="availableTo"
+                            value={shopDetails.availableTo}
+                            onChange={handleInputChange}
+                            required
+                            style={{ fontSize: '0.875rem', height: '2rem' }}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
 
                   <div className="mb-2">
-                    <CFormLabel htmlFor="availableTo" style={{ fontSize: '0.875rem' }}>Available To</CFormLabel>
-                    <div className="d-flex">
-                      <CFormInput
-                        type="time"
-                        id="availableTo"
-                        name="availableTo"
-                        value={shopDetails.availableTo}
-                        onChange={handleInputChange}
-                        style={{ fontSize: '0.875rem', height: '2rem', flex: 1 }}
-                      />
-                      <CFormSelect
-                        id="availableToPeriod"
-                        name="availableToPeriod"
-                        value={shopDetails.availableToPeriod}
-                        onChange={handleInputChange}
-                        style={{ fontSize: '0.875rem', height: '2rem', width: 'auto', flexShrink: 0 }}
-                      >
-                        <option value="AM">AM</option>
-                        <option value="PM">PM</option>
-                      </CFormSelect>
-                    </div>
-                  </div>
-
-                  <div className="mb-2">
-                    <CFormLabel htmlFor="address" style={{ fontSize: '0.875rem' }}>Address</CFormLabel>
+                    <CFormLabel htmlFor="address" style={{ fontSize: '0.875rem' }}>Shop Address</CFormLabel>
                     <Autocomplete
                       onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
                       onPlaceChanged={handlePlaceSelect}
                     >
                       <CFormInput
-                        type="text"
                         id="address"
                         name="address"
-                        placeholder="Enter address"
+                        placeholder="Enter shop address"
                         value={shopDetails.address}
                         onChange={handleInputChange}
                         required
@@ -321,9 +289,15 @@ const ShopDetails = () => {
                     </Autocomplete>
                   </div>
 
-                  <CButton type="submit" color="success" disabled={loading} style={{ width: '100%' }}>
-                    {loading ? <CSpinner size="sm" /> : 'Register Shop'}
-                  </CButton>
+                  <div className="d-grid gap-2">
+                    <CButton
+                      type="submit"
+                      color="success"
+                      style={{ fontSize: '0.875rem', height: '2.5rem' }}
+                    >
+                      {loading ? <CSpinner size="sm" /> : 'Register Shop'}
+                    </CButton>
+                  </div>
                 </CForm>
               </CCardBody>
             </CCard>

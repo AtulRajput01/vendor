@@ -60,8 +60,8 @@ const SpeciesExtensionList = () => {
 
   const handleEditSubmit = async () => {
     const apiUrl = selectedItem.speciesName
-      ? `http://localhost:3002/api/species/species/${selectedItem._id}`
-      : `http://localhost:3002/api/Extension/editeExten/${selectedItem._id}`;
+      ? `http://54.244.180.151:3002/api/species/species/${selectedItem._id}`
+      : `http://54.244.180.151:3002/api/Extension/editeExten/${selectedItem._id}`;
 
     const formData = new FormData();
     formData.append('name', editedItem.name);
@@ -116,7 +116,7 @@ const SpeciesExtensionList = () => {
                     <CTableDataCell style={{ textAlign: "center" }}>{specie.speciesName}</CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>
                       {specie.speciesImage ? (
-                        <img src={`http://localhost:3002/${specie.speciesImage}`} alt="Species" style={{ width: '50px', height: '50px' }} />
+                        <img src={`http://54.244.180.151:3002/${specie.speciesImage}`} alt="Species" style={{ width: '50px', height: '50px' }} />
                       ) : "No Image"}
                     </CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>{specie.price}</CTableDataCell>
@@ -171,7 +171,7 @@ const SpeciesExtensionList = () => {
                     <CTableDataCell style={{ textAlign: "center" }}>{extension.extensionName}</CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>
                       {extension.image ? (
-                        <img src={`http://localhost:3002/${extension.image}`} alt="Extension" style={{ width: '50px', height: '50px' }} />
+                        <img src={`http://54.244.180.151:3002/${extension.image}`} alt="Extension" style={{ width: '50px', height: '50px' }} />
                       ) : "No Image"}
                     </CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>{extension.price}</CTableDataCell>
@@ -203,7 +203,12 @@ const SpeciesExtensionList = () => {
         </CModalHeader>
         <CModalBody>
           {/* Conditionally render the Name field */}
-          {!selectedItem?.speciesName && (
+          {selectedItem?.speciesName ? (
+            <div>
+              <label>Species Name:</label>
+              <p>{selectedItem.speciesName}</p>
+            </div>
+          ) : (
             <div>
               <label>Name:</label>
               <input
