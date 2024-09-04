@@ -70,6 +70,18 @@ const ShopDetails = () => {
     });
   };
 
+  const handleAppointmentTime = () => {
+    const now = new Date();
+    const availableFrom = now.toISOString().slice(0, 16); // Current time formatted as "YYYY-MM-DDTHH:mm"
+    const availableTo = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString().slice(0, 16); // 24 hours from now
+
+    setShopDetails({
+      ...shopDetails,
+      availableFrom: availableFrom,
+      availableTo: availableTo,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -214,6 +226,28 @@ const ShopDetails = () => {
                   </div>
 
                   <div className="mb-2">
+                      <CFormLabel htmlFor="time" style={{ fontSize: '0.875rem' }}>Appointment</CFormLabel>
+                      <CFormInput
+                        type="checkbox"
+                        id="contactNumber"
+                        name="contactNumber"
+                        placeholder="Enter contact number"
+                        value={shopDetails.contactNumber}
+                        onChange={handleInputChange}
+                        style={{ fontSize: '0.875rem', height: '2rem' }}
+                      />
+                      <CFormInput
+                        type="checkbox"
+                        id="contactNumber"
+                        name="contactNumber"
+                        placeholder="Enter contact number"
+                        value={shopDetails.contactNumber}
+                        onChange={handleInputChange}
+                        style={{ fontSize: '0.875rem', height: '2rem' }}
+                      />
+                    </div>
+                    
+                  <div className="mb-2">
                     <CFormLabel htmlFor="availableFrom" style={{ fontSize: '0.875rem' }}>Available From</CFormLabel>
                     <div className="d-flex">
                       <CFormInput
@@ -235,6 +269,13 @@ const ShopDetails = () => {
                         <option value="PM">PM</option>
                       </CFormSelect>
                     </div>
+                  </div>
+
+                  {/* Book Appointment Button */}
+                  <div className="mb-2">
+                    <CButton color="primary" onClick={handleAppointmentTime}>
+                      Book Appointment
+                    </CButton>
                   </div>
 
                   <div className="mb-2">
