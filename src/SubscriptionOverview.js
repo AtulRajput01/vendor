@@ -80,12 +80,12 @@ const SubscriptionOverview = () => {
                   </CCardText>
                   <CCardTitle style={titleStyle}>Description</CCardTitle>
                   <CCardText>{subscription.description}</CCardText>
-                  <CCardTitle style={titleStyle}>Features</CCardTitle>
+                  {/* <CCardTitle style={titleStyle}>Features</CCardTitle>
                   <CListGroup className="mb-3">
                     {subscription.features.map((feature, index) => (
                       <CListGroupItem key={index}>{feature}</CListGroupItem>
                     ))}
-                  </CListGroup>
+                  </CListGroup> */}
                   <div className="mt-3">
                     <h5 style={titleStyle}>Support and Assistance</h5>
                     <p>
