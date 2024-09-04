@@ -73,8 +73,8 @@ const Shops = () => {
               <CTableDataCell style={{ textAlign: "center" }}>{shop.ownerName}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{shop.ownerEmail}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{shop.contactNumber}</CTableDataCell>
-              <CTableDataCell style={{ textAlign: "center" }}>{shop.availableFrom}</CTableDataCell>
-              <CTableDataCell style={{ textAlign: "center" }}>{shop.availableTo}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center" }}>{shop.availableFrom || '----'}</CTableDataCell>
+              <CTableDataCell style={{ textAlign: "center" }}>{shop.availableTo || '----'}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>{shop.address}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>
                 {shop.shopLogo ? (
