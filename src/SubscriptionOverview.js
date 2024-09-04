@@ -5,45 +5,24 @@ import {
   CCardHeader,
   CCardTitle,
   CCardText,
-  CButton,
   CRow,
   CCol,
   CContainer,
-  CBadge,
   CListGroup,
   CListGroupItem,
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CModalBody,
-  CModalFooter,
 } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const SubscriptionOverview = () => {
-  const [subscription, setSubscription] = useState({
-    type: 'Taxidermy Shop Owner',
-    plan: 'Premium Plan',
-    status: 'Active',
-    renewalDate: '2024-09-15',
-    benefits: [
-      'Access to premium taxidermy tutorials',
-      'Priority customer support',
-      'Discounts on supplies',
-      'Exclusive access to taxidermy events',
-    ],
-    features: [
-      'Unlimited project submissions',
-      'High-quality video content',
-      'Dedicated account manager',
-      'Advanced tools and resources',
-    ],
-  });
-
-  const [showPlansModal, setShowPlansModal] = useState(false);
+  const location = useLocation();
+  const { id } = location.state || {};
+  const [subscription, setSubscription] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [supportInfo, setSupportInfo] = useState({
-    email: 'support@taxidermyshop.com',
-    phone: '+1-123-456-7890',
+    email: "hunt30@gmail.com",
+    phone: "+1 (502) 655-9867"
   });
 
   const textStyle = { color: '#198754' };
@@ -51,89 +30,62 @@ const SubscriptionOverview = () => {
   const headerTitleStyle = { color: '#6f42c1' };
   const bigCardStyle = { backgroundColor: '#f8f9fa' };
 
-  const getStatusBadge = (status) => {
-    return status === 'Active' ? 'success' : 'danger';
-  };
-
-  const handleUpgradeDowngrade = () => {
-    setShowPlansModal(true);
-  };
-
   useEffect(() => {
-    const renewalDate = new Date(subscription.renewalDate);
-    const today = new Date();
-    const timeUntilRenewal = renewalDate.getTime() - today.getTime();
-
-    if (timeUntilRenewal > 0) {
-      const timeoutId = setTimeout(() => {
-        alert('Your subscription renewal is approaching. Please update your payment settings.');
-      }, timeUntilRenewal);
-
-      return () => clearTimeout(timeoutId);
+    if (id) {
+      fetchSubscriptionData();
     }
-  }, [subscription.renewalDate]);
+  }, [id]);
 
-  const availablePlans = [
-    {
-      name: 'Premium Plan',
-      features: [
-        'Unlimited project submissions',
-        'High-quality video content',
-        'Dedicated account manager',
-        'Advanced tools and resources',
-      ],
-      price: '$99/month',
-    },
-    {
-      name: 'Standard Plan',
-      features: [
-        'Limited project submissions',
-        'Standard video content',
-        'Basic tools and resources',
-      ],
-      price: '$49/month',
-    },
-    // Add more plans as needed
-  ];
+  const fetchSubscriptionData = async () => {
+    try {
+      const response = await axios.get(`http://54.244.180.151:3002/api/subscription/${id}`);
+      setSubscription(response.data.data);
+    } catch (error) {
+      console.error('Error fetching subscription data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!subscription) {
+    return <div>No subscription data available.</div>;
+  }
 
   return (
-    <CContainer className="py-5">
-      <CCard className="text-center shadow-lg" style={{ ...bigCardStyle, padding: "2rem 2rem" }}>
+    <CContainer>
+      <CCard className="text-center" style={{ ...bigCardStyle, padding: "1rem" }}>
         <CCardHeader>
-          <CCardTitle className="h2" style={headerTitleStyle}>Subscription Overview</CCardTitle>
+          <CCardTitle className="h3" style={headerTitleStyle}>Subscription Overview</CCardTitle>
         </CCardHeader>
-        <CCardBody style={{ padding: "2rem 2rem" }}>
+        <CCardBody style={{ padding: "1rem" }}>
           <CRow className="justify-content-center">
-            <CCol sm="12" md="8" className="mb-4">
+            <CCol sm="12" md="8" className="mb-3">
               <CCard className="shadow">
                 <CCardHeader>
-                  <CCardTitle style={titleStyle}>{subscription.type}</CCardTitle>
-                  <CBadge color={getStatusBadge(subscription.status)}>{subscription.status}</CBadge>
+                  <CCardTitle style={titleStyle}>{subscription.subscriptionPlan}</CCardTitle>
                 </CCardHeader>
                 <CCardBody>
                   <CCardText style={textStyle}>
-                    <strong>Current Plan:</strong> {subscription.plan}
+                    <strong>Current Plan:</strong> {subscription.subscriptionPlan}
                   </CCardText>
                   <CCardText style={textStyle}>
-                    <strong>Renewal Date:</strong> {subscription.renewalDate}
+                    <strong>Price:</strong> ${subscription.price}
                   </CCardText>
-                  <CCardTitle style={titleStyle}>Benefits</CCardTitle>
-                  <CListGroup className="mb-3">
-                    {subscription.benefits.map((benefit, index) => (
-                      <CListGroupItem key={index}>{benefit}</CListGroupItem>
-                    ))}
-                  </CListGroup>
+                  <CCardText style={textStyle}>
+                    <strong>Expiry Date:</strong> {new Date(subscription.planExpiryDate).toLocaleDateString()}
+                  </CCardText>
+                  <CCardTitle style={titleStyle}>Description</CCardTitle>
+                  <CCardText>{subscription.description}</CCardText>
                   <CCardTitle style={titleStyle}>Features</CCardTitle>
-                  <CListGroup>
+                  <CListGroup className="mb-3">
                     {subscription.features.map((feature, index) => (
                       <CListGroupItem key={index}>{feature}</CListGroupItem>
                     ))}
                   </CListGroup>
-                  <div className="mt-3">
-                    <CButton color="secondary" onClick={handleUpgradeDowngrade}>
-                      Upgrade/Downgrade
-                    </CButton>
-                  </div>
                   <div className="mt-3">
                     <h5 style={titleStyle}>Support and Assistance</h5>
                     <p>
@@ -150,28 +102,6 @@ const SubscriptionOverview = () => {
           </CRow>
         </CCardBody>
       </CCard>
-
-      {/* Modal for displaying available plans */}
-      <CModal visible={showPlansModal} onClose={() => setShowPlansModal(false)}>
-        <CModalHeader onClose={() => setShowPlansModal(false)}>
-          <CModalTitle>Available Plans</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          {availablePlans.map((plan, index) => (
-            <div key={index} className="mb-4">
-              <h5>{plan.name}</h5>
-              <p><strong>Price:</strong> {plan.price}</p>
-              <h6>Features:</h6>
-              <ul>
-                {plan.features.map((feature, i) => (
-                  <li key={i}>{feature}</li>
-                ))}
-              </ul>
-              <CButton color="primary">Select Plan</CButton>
-            </div>
-          ))}
-        </CModalBody>
-      </CModal>
     </CContainer>
   );
 };

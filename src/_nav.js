@@ -40,12 +40,12 @@ const _nav = [
     icon: <CIcon icon={cilCart} customClassName="nav-icon" />
   },
 
-  {
-    component: CNavItem,
-    name: 'Notifications',
-    to: '/Notifications',
-    icon: <CIcon icon={cilBell} customClassName="nav-icon" />
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Notifications',
+  //   to: '/Notifications',
+  //   icon: <CIcon icon={cilBell} customClassName="nav-icon" />
+  // },
 
   // {
   //   component: CNavItem,
