@@ -73,7 +73,7 @@ const Subscription = () => {
                           <li key={index}>{feature}</li>
                         ))}
                       </ul>
-                      <CButton color="secondary" onClick={() => handleChoosePlan(plan.name, plan.price)} disabled = { selectedPlan !== null && selectedPlan.planType === plan.name }>Choose Plan</CButton>
+                      <CButton color="secondary" onClick={() => handleChoosePlan(plan.billingFrequency, plan.price)} disabled = { selectedPlan !== null && selectedPlan.planType === plan.name }>Choose Plan</CButton>
                     </CCardBody>
                   </CCard>
                 </CCol>
