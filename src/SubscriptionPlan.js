@@ -15,6 +15,8 @@ const Shops = () => {
     }, []);
 
     const handleClick = (id) => {
+        console.log("hgf",id);
+        
         navigate('/SubscriptionOverview',{state:{id}});
     };
 
@@ -48,7 +50,7 @@ const Shops = () => {
                         <CTableHeaderCell scope="col" style={{ textAlign: "center" }}> Plan</CTableHeaderCell>
                         <CTableHeaderCell scope="col" style={{ textAlign: "center" }}> Amount</CTableHeaderCell>
                         <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Expiry Date</CTableHeaderCell>
-                        <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Action</CTableHeaderCell>
+                        {/* <CTableHeaderCell scope="col" style={{ textAlign: "center" }}>Action</CTableHeaderCell> */}
                     </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -65,8 +67,8 @@ const Shops = () => {
                                 {shop.planExpiryDate ? shop.planExpiryDate.split('T')[0] : null}
                             </CTableDataCell>
 
-                            <CTableDataCell className='text-center'>
-                                <Tooltip title="Vies Species">
+                            {/* <CTableDataCell className='text-center'>
+                                <Tooltip title="Vies Subscription">
                                     <button
                                         style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
                                         onClick={() => handleClick(shop._id)}
@@ -74,7 +76,7 @@ const Shops = () => {
                                         <FontAwesomeIcon icon={faEye} style={{ color: "#007bff", fontSize: '20px' }} />
                                     </button>
                                 </Tooltip>
-                            </CTableDataCell>
+                            </CTableDataCell> */}
                         </CTableRow>
                     ))}
                 </CTableBody>
