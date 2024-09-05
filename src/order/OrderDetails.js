@@ -115,7 +115,7 @@ const OrderDetails = () => {
               <CTableDataCell style={{ textAlign: "center" }}>${order.totalAmount}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>
                 {order.status === 'pending' && (
-                  <Tooltip title="Confirm Order">
+                  <Tooltip title="Order Received">
                     <button
                       style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
                       onClick={() => handleConfirmOrder(order.orderId, 'confirmed')}
@@ -125,7 +125,7 @@ const OrderDetails = () => {
                   </Tooltip>
                 )}
                 {order.status === 'confirmed' && (
-                  <Tooltip title="Ship Order">
+                  <Tooltip title=" In production">
                     <button
                       style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
                       onClick={() => handleConfirmOrder(order.orderId, 'shipped')}
@@ -135,7 +135,7 @@ const OrderDetails = () => {
                   </Tooltip>
                 )}
                 {order.status === 'shipped' && (
-                  <Tooltip title="Deliver Order">
+                  <Tooltip title="Detail work">
                     <button
                       style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
                       onClick={() => handleConfirmOrder(order.orderId, 'delivered')}
@@ -146,7 +146,7 @@ const OrderDetails = () => {
                 )}
                 {order.status === 'delivered' && (
                   <span style={{ color: "#28a745", fontSize: '16px', fontWeight: 'bold' }}>
-                    Delivered
+                    Trophy completed
                   </span>
                 )}
                 <Tooltip title="View Order">
