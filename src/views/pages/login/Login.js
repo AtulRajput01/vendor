@@ -25,7 +25,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  
+
 
   const handleLogin = async () => {
     setLoading(true);
@@ -34,12 +34,16 @@ const Login = () => {
         email,
         password,
       });
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('vendorID', response.data.data._id);
-      navigateTo('/OrderManage');
+      if (response.data.data.status == 'pending') {
+        navigateTo('/PendingApproval');
+      } else {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('vendorID', response.data.data._id);
+        navigateTo('/OrderManage');
+      }
     } catch (error) {
       setMessage('Login failed');
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -48,9 +52,9 @@ const Login = () => {
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center " >
       <CContainer >
         <CRow className="justify-content-center" >
-          <CCol style={{maxWidth: '37%'}}>
+          <CCol style={{ maxWidth: '37%' }}>
             <CCardGroup>
-              <CCard className="p-4 bg-dark-gray image" style={{ backgroundColor: '#FE3C00'}}  >
+              <CCard className="p-4 bg-dark-gray image" style={{ backgroundColor: '#FE3C00' }}  >
                 <CCardBody className="text-center">
                   <div className="mb-4">
                     <img src={logoImage} alt="Logo" style={{ maxWidth: '60%', height: 'auto' }} />
@@ -86,8 +90,8 @@ const Login = () => {
                     </CInputGroup>
                     <CCol>
                       <CCol>
-                      <CButton
-                          onClick = {handleLogin}
+                        <CButton
+                          onClick={handleLogin}
                           style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', color: 'white' }}
                           className="px-4"
                           disabled={loading} // Disable button while loading
@@ -97,12 +101,12 @@ const Login = () => {
                       </CCol>
                       <CCol className="text-right">
                         <Link to="/forgot-password">
-                          <CButton color="link" className="px-2" style={{color:"white"}}>
+                          <CButton color="link" className="px-2" style={{ color: "white" }}>
                             Forgot password?
                           </CButton>
                         </Link>
                         <Link to="/register">
-                          <CButton color="link" className="px-0" style={{color:"white"}}>
+                          <CButton color="link" className="px-0" style={{ color: "white" }}>
                             Register
                           </CButton>
                         </Link>
