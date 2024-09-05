@@ -12,19 +12,16 @@ import {
 } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 
-// Import images
 import huntLogo from './../public/logo/tlogo1.png';
-import clockImage from './../public/logo/clock.png';  // Make sure to replace with the correct path to your clock image
-
+import clockImage from './../public/logo/clock.png'; 
 const Logincheck = () => {
 
-    const textStyle = { color: '#198754', fontSize: '18px' }; // Adjusted text size
-    const titleStyle = { color: '#c81e65', fontSize: '24px' }; // Adjusted title size
+    const textStyle = { color: '#198754', fontSize: '18px' }; 
+    const titleStyle = { color: '#c81e65', fontSize: '24px' }; 
     const headerTitleStyle = { color: '#6f42c1' };
     const bigCardStyle = { backgroundColor: '#f8f9fa' };
 
     return (
-        // <CContainer className="py-4">
             <CCard className="text-center shadow-lg" style={{ ...bigCardStyle, width: "" }}>
                 <CCardBody style={{ padding: "2rem 2rem" }}>
                     <CRow className="justify-content-center">
