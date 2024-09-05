@@ -36,6 +36,8 @@ const SubscriptionOverview = () => {
     }
   }, [id]);
 
+  console.log(subscription,id);
+  
   const fetchSubscriptionData = async () => {
     try {
       const response = await axios.get(`http://54.244.180.151:3002/api/subscription/${id}`);
