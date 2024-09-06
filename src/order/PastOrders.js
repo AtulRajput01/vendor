@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CTable, CTableHead, CTableRow, CTableHeaderCell, CTableBody, CTableDataCell } from '@coreui/react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faEye , faTruck,faBoxOpen,faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import {faEye} from '@fortawesome/free-solid-svg-icons';
 import Tooltip from '@mui/material/Tooltip';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -47,11 +47,6 @@ const OrderDetails = () => {
     const vendorId = localStorage.getItem('vendorID');
     const response = await axios.get(`http://54.244.180.151:3002/api/getOrder/${vendorId}`);
     setOrders(response.data.data);
-  };
-
-  const handleConfirmOrder = async (id,status) => {
-    await axios.put(`http://54.244.180.151:3002/api/order/${id}`,{status});
-    fetchOrders();
   };
 
   const handleViewOrder = (order) => {
@@ -99,39 +94,9 @@ const OrderDetails = () => {
               <CTableDataCell style={{ textAlign: "center" }}>{order.paymentStatus}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>${order.totalAmount}</CTableDataCell>
               <CTableDataCell style={{ textAlign: "center" }}>
-              {order.status === 'pending' && (
-                    <Tooltip title="Confirm Order">
-                      <button
-                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                        onClick={() => handleConfirmOrder(order.orderId ,'confirmed')}
-                      >
-                        <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#28a745", fontSize: '20px' }} />
-                      </button>
-                    </Tooltip>
-                  )}
-                  {order.status === 'confirmed' && (
-                    <Tooltip title="Ship Order">
-                      <button
-                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                        onClick={() => handleConfirmOrder(order.orderId ,'shipped')}
-                      >
-                        <FontAwesomeIcon icon={faTruck} style={{ color: "#007bff", fontSize: '20px' }} />
-                      </button>
-                    </Tooltip>
-                  )}
-                  {order.status === 'shipped' && (
-                    <Tooltip title="Deliver Order">
-                      <button
-                        style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}
-                        onClick={() => handleConfirmOrder(order.orderId , 'delivered')}
-                      >
-                        <FontAwesomeIcon icon={faBoxOpen} style={{ color: "#ffc107", fontSize: '20px' }} />
-                      </button>
-                    </Tooltip>
-                  )}
                  {order.status === 'delivered' && (
                     <span style={{ color: "#28a745", fontSize: '16px', fontWeight: 'bold' }}>
-                      Delivered
+                      Trophy completed
                     </span>
                   )}
                 <Tooltip title="View Order">
