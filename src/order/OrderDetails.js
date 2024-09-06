@@ -53,8 +53,11 @@ const OrderDetails = () => {
   const fetchOrders = async () => {
     const vendorId = localStorage.getItem('vendorID');
     const response = await axios.get(`http://54.244.180.151:3002/api/getOrder/${vendorId}`);
-    setOrders(response.data.data);
+    const orders=response.data.data;
+    const filteredOrders = orders.filter(order => order.status !== "delivered");
+    setOrders(filteredOrders);
   };
+
 
   const handleConfirmOrder = async (id, status) => {
     await axios.put(`http://54.244.180.151:3002/api/order/${id}`, { status });
