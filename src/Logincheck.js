@@ -16,7 +16,7 @@ import huntLogo from './../public/logo/tlogo1.png';
 import clockImage from './../public/logo/clock.png';
 const Logincheck = () => {
     const [supportInfo, setSupportInfo] = useState({
-        email: "hunt30@gmail.com",
+        email: "hunt30apps@gmail.com",
         phone: "+1 (502) 655-9867"
     });
     const textStyle = { color: '#198754', fontSize: '18px' };

@@ -21,7 +21,7 @@ const SubscriptionOverview = () => {
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
   const [supportInfo, setSupportInfo] = useState({
-    email: "hunt30@gmail.com",
+    email: "hunt30apps@gmail.com",
     phone: "+1 (502) 655-9867"
   });
 
