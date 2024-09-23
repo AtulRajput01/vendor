@@ -1,0 +1,15 @@
+/* Custom styles for DatePicker */
+.react-datepicker {
+  font-family: 'Arial', sans-serif;
+  border: 1px solid #007bff;
+}
+
+.react-datepicker__header {
+  background-color: #007bff;
+  color: white;
+}
+
+.react-datepicker__day--selected {
+  background-color: #0056b3;
+  color: white;
+}
