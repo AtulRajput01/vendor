@@ -23,7 +23,7 @@ const Shops = () => {
     const fetchShop = async () => {
         const vendorId = localStorage.getItem('vendorID');
         try {
-            const response = await axios.get(`https://www.taxidermyvendor.hunt30.com/api/ShopDetails/shop/${vendorId}`);
+            const response = await axios.get(`http://54.71.141.115:3002/ShopDetails/shop/${vendorId}`);
             setShops(response.data);
         } catch (error) {
             console.error('Error fetching shops:', error);

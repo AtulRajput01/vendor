@@ -32,7 +32,7 @@ const ResetPassword = () => {
   const handleResetPassword = async () => {
     setLoading(true);
     try {
-      const response = await fetch('https://www.taxidermyvendor.hunt30.com/api/auths/reset-password', {
+      const response = await fetch('http://54.71.141.115:3002/auths/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

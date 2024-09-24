@@ -40,7 +40,7 @@ const ExtensionSelect = () => {
   const fetchSpecie = async (id) => {
     setLoading(true);
     try {
-      const response = await axios.post(`https://www.taxidermyvendor.hunt30.com/api/species/getSpecies/${id}`);
+      const response = await axios.post(`http://54.71.141.115:3002/species/getSpecies/${id}`);
       setSpeciesList(response.data.data);
     } catch (error) {
       console.error('Error in fetching species:', error);
@@ -78,7 +78,7 @@ const ExtensionSelect = () => {
     formData.append('role', extensionDetails.role);
 
     try {
-      await axios.post('https://www.taxidermyvendor.hunt30.com/api/Extension/addExtension', formData, {
+      await axios.post('http://54.71.141.115:3002/Extension/addExtension', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
