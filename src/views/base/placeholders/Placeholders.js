@@ -50,7 +50,7 @@ const Placeholders = () => {
                     orientation="top"
                     width="100%"
                     height="162"
-                    xmlns="http://www.w3.org/3002
+                    xmlns="https://www.w3.org/3002
 
 
 /svg"

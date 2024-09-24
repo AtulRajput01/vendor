@@ -35,7 +35,7 @@ const Subscription = () => {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await axios.get('http://www.taxidermyvendor.hunt30.com/api/subscription');
+        const response = await axios.get('https://www.taxidermyvendor.hunt30.com/api/subscription');
         setPlans(response.data.data);
       } catch (error) {
         console.error('Error fetching subscription plans:', error);
@@ -142,7 +142,7 @@ const PaymentForm = ({ selectedPlan }) => {
         throw new Error(error.message);
       }
 
-      const response = await axios.post('http://www.taxidermyvendor.hunt30.com/api/SubscriptionPayment', {
+      const response = await axios.post('https://www.taxidermyvendor.hunt30.com/api/SubscriptionPayment', {
         planType: selectedPlan.planType,
         amount: selectedPlan.amount,
         tokenid: token.id,

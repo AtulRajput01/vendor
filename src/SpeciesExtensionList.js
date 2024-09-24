@@ -26,15 +26,15 @@ const SpeciesExtensionList = () => {
   }, [shopId]);
 
   const fetchSpecies = async (shopId) => {
-    const response = await axios.post(`http://www.taxidermyvendor.hunt30.com/api/species/getSpecies/${shopId}`);
+    const response = await axios.post(`https://www.taxidermyvendor.hunt30.com/api/species/getSpecies/${shopId}`);
     setSpecies(response.data.data)
   };
   const fetchExtension = async (shopId) => {
-    const response = await axios.post(`http://www.taxidermyvendor.hunt30.com/api/Extension/getByShop/${shopId}`);
+    const response = await axios.post(`https://www.taxidermyvendor.hunt30.com/api/Extension/getByShop/${shopId}`);
     setExtensions(response.data.data)
   };
   const deleteExtension = async (id) => {
-    const response = await axios.delete(`http://www.taxidermyvendor.hunt30.com/api/Extension/deleteExten/${id}`);
+    const response = await axios.delete(`https://www.taxidermyvendor.hunt30.com/api/Extension/deleteExten/${id}`);
     fetchExtension(shopId);
   }
 
@@ -60,8 +60,8 @@ const SpeciesExtensionList = () => {
 
   const handleEditSubmit = async () => {
     const apiUrl = selectedItem.speciesName
-      ? `http://www.taxidermyvendor.hunt30.com/api/species/species/${selectedItem._id}`
-      : `http://www.taxidermyvendor.hunt30.com/api/Extension/editeExten/${selectedItem._id}`;
+      ? `https://www.taxidermyvendor.hunt30.com/api/species/species/${selectedItem._id}`
+      : `https://www.taxidermyvendor.hunt30.com/api/Extension/editeExten/${selectedItem._id}`;
 
     const formData = new FormData();
     formData.append('name', editedItem.name);
@@ -83,7 +83,7 @@ const SpeciesExtensionList = () => {
 
 
   const deleteSpecies = async (id) => {
-    const response = await axios.delete(`http://www.taxidermyvendor.hunt30.com/api/species/deleteSpecies/${id}`);
+    const response = await axios.delete(`https://www.taxidermyvendor.hunt30.com/api/species/deleteSpecies/${id}`);
     fetchSpecies(shopId);
   }
 
@@ -116,7 +116,7 @@ const SpeciesExtensionList = () => {
                     <CTableDataCell style={{ textAlign: "center" }}>{specie.speciesName}</CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>
                       {specie.speciesImage ? (
-                        <img src={`http://www.taxidermyvendor.hunt30.com/${specie.speciesImage}`} alt="Species" style={{ width: '50px', height: '50px' }} />
+                        <img src={`https://www.taxidermyvendor.hunt30.com/${specie.speciesImage}`} alt="Species" style={{ width: '50px', height: '50px' }} />
                       ) : "No Image"}
                     </CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>{specie.price}</CTableDataCell>
@@ -171,7 +171,7 @@ const SpeciesExtensionList = () => {
                     <CTableDataCell style={{ textAlign: "center" }}>{extension.extensionName}</CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>
                       {extension.image ? (
-                        <img src={`http://www.taxidermyvendor.hunt30.com/${extension.image}`} alt="Extension" style={{ width: '50px', height: '50px' }} />
+                        <img src={`https://www.taxidermyvendor.hunt30.com/${extension.image}`} alt="Extension" style={{ width: '50px', height: '50px' }} />
                       ) : "No Image"}
                     </CTableDataCell>
                     <CTableDataCell style={{ textAlign: "center" }}>{extension.price}</CTableDataCell>

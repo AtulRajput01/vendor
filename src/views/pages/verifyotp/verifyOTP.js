@@ -30,7 +30,7 @@ const VerifyOTP = () => {
   const handleVerifyOTP = async () => {
     setLoading(true); // Show loader when request starts
     try {
-      const response = await axios.post('http://www.taxidermyvendor.hunt30.com/api/auths/verify-otp', {otp });
+      const response = await axios.post('https://www.taxidermyvendor.hunt30.com/api/auths/verify-otp', {otp });
       setMessage(response.data.message);
       const token=response.data.token;
       if (response.status === 200) {

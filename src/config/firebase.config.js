@@ -4,7 +4,7 @@ import 'firebase/compat/database';
 const firebaseConfig = {
     apiKey: "AIzaSyDHJUm-WtYqA8LbVjIBjubi_tmOw3sTun0",
     authDomain: "taxidermy-a2431.firebaseapp.com",
-    databaseURL: "https://taxidermy-a2431-default-rtdb.firebaseio.com",
+    databaseURL: "httpss://taxidermy-a2431-default-rtdb.firebaseio.com",
     projectId: "taxidermy-a2431",
     storageBucket: "taxidermy-a2431.appspot.com",
     messagingSenderId: "772967566761",
