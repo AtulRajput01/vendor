@@ -49,7 +49,7 @@ const ProfilePage = () => {
   }, [vendorId]);
 
   const fetchProfile = async (vendorId) => {
-    const response = await axios.get(`https://www.taxidermyadmin.hunt30.com/api/vendor/profile/${vendorId}`);
+    const response = await axios.get(`https://www.taxidermyvendor.hunt30.com/api/vendor/profile/${vendorId}`);
     setProfile(response.data.data);
   };
 
@@ -67,7 +67,7 @@ const ProfilePage = () => {
   };
 
   const handleSaveClick = async () => {
-    await axios.put(`https://www.taxidermyadmin.hunt30.com/api/vendor/profile/${vendorId}`, profile)
+    await axios.put(`https://www.taxidermyvendor.hunt30.com/api/vendor/profile/${vendorId}`, profile)
       .then(response => {
         alert('Profile saved successfully!');
         setEditingFields({
@@ -87,7 +87,7 @@ const ProfilePage = () => {
   };
 
   const handlePasswordSubmit = async () => {
-    await axios.put(`https://www.taxidermyadmin.hunt30.com/api/vendor/changePassword/${vendorId}`, passwords)
+    await axios.put(`https://www.taxidermyvendor.hunt30.com/api/vendor/changePassword/${vendorId}`, passwords)
       .then(response => {
         alert('Password changed successfully!');
         setChangePasswordModal(false);
