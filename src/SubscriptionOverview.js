@@ -40,7 +40,7 @@ const SubscriptionOverview = () => {
   
   const fetchSubscriptionData = async () => {
     try {
-      const response = await axios.get(`http://54.71.141.115:3002/subscription/${id}`);
+      const response = await axios.get(`https://www.taxidermyadmin.hunt30.com/api/subscription/${id}`);
       setSubscription(response.data.data);
     } catch (error) {
       console.error('Error fetching subscription data:', error);

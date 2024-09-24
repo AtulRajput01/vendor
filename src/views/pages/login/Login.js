@@ -30,7 +30,7 @@ const Login = () => {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://54.71.141.115:3002/auths/login', {
+      const response = await axios.post('https://www.taxidermyadmin.hunt30.com/api/auths/login', {
         email,
         password,
       });

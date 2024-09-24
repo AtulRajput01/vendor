@@ -75,7 +75,7 @@ const OrderManage = () => {
   }, [filterOption, vendorID]);
 
   const fetchOrderSummary = (start, end) => {
-    axios.post(`http://54.71.141.115:3002/summary/${vendorID}`, {
+    axios.post(`https://www.taxidermyadmin.hunt30.com/api/summary/${vendorID}`, {
       startDate: start.toISOString().split('T')[0],
       endDate: end.toISOString().split('T')[0],
     })

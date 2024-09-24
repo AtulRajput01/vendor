@@ -37,7 +37,7 @@ const SpeciesSelect = () => {
   useEffect(() => {
     const fetchSpeciesOptions = async () => {
       try {
-        const response = await axios.get('http://54.71.141.115:3002/species/getSpeciesCategories');
+        const response = await axios.get('https://www.taxidermyadmin.hunt30.com/api/species/getSpeciesCategories');
         setSpeciesOptions(response.data.data);
       } catch (error) {
         console.error('Error fetching species options:', error);
@@ -82,7 +82,7 @@ const SpeciesSelect = () => {
     }
 
     try {
-      const response = await axios.post('http://54.71.141.115:3002/species/addSpecies', formData, {
+      const response = await axios.post('https://www.taxidermyadmin.hunt30.com/api/species/addSpecies', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

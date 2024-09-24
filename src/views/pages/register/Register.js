@@ -33,7 +33,7 @@ const Register = () => {
   const handleRegister = async () => {
     setLoading(true); // Show loader when request starts
     try {
-      const response = await axios.post('http://54.71.141.115:3002/auths/Register', {
+      const response = await axios.post('https://www.taxidermyadmin.hunt30.com/api/auths/Register', {
         name,
         email,
         password,
