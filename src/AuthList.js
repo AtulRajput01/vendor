@@ -11,7 +11,7 @@ const AuthList = () => {
 
   const fetchAuths = async () => {
     try {
-      const response = await axios.get('http://54.244.180.151:3002/api/auths/');
+      const response = await axios.get('http://www.taxidermyvendor.hunt30.com/api/auths/');
       setAuths(response.data);
       console.log(response)
       setLoading(false);
@@ -26,7 +26,7 @@ const AuthList = () => {
 
   const handleAddAuth = async () => {
     try {
-      const response = await axios.post('http://54.244.180.151:3002/api/auths/website', { username, email, password });
+      const response = await axios.post('http://www.taxidermyvendor.hunt30.com/api/auths/website', { username, email, password });
       setAuths([...auths, response.data]);
       setUsername('');
       setEmail('');

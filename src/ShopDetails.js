@@ -108,7 +108,7 @@ const ShopDetails = () => {
     formData.append('vendorId', localStorage.getItem('vendorID'));
 
     try {
-      const response = await axios.post('http://54.244.180.151:3002/api/ShopDetails/add', formData, {
+      const response = await axios.post('http://www.taxidermyvendor.hunt30.com/api/ShopDetails/add', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
