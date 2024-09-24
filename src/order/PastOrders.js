@@ -45,7 +45,7 @@ const OrderDetails = () => {
 
   const fetchOrders = async () => {
     const vendorId = localStorage.getItem('vendorID');
-    const response = await axios.get(`http://54.244.180.151:3002/api/getOrder/${vendorId}`);
+    const response = await axios.get(`http://www.taxidermyvendor.hunt30.com/api/getOrder/${vendorId}`);
     setOrders(response.data.data);
   };
 
@@ -173,7 +173,7 @@ const OrderDetails = () => {
                       <TableRow key={index}>
                         <TableCell align="center">{species.speciesName}</TableCell>
                         <TableCell align="center">
-                          <Image src={`http://54.244.180.151:3002/${species.image}`} alt={`Species ${index + 1}`} />
+                          <Image src={`http://www.taxidermyvendor.hunt30.com/${species.image}`} alt={`Species ${index + 1}`} />
                         </TableCell>
                         <TableCell align="center">${species.speciesPrice}</TableCell>
                       </TableRow>
@@ -197,7 +197,7 @@ const OrderDetails = () => {
                       <TableRow key={index}>
                         <TableCell align="center">{extension.extensionName}</TableCell>
                         <TableCell align="center">
-                          <Image src={`http://54.244.180.151:3002/${extension.image}`} alt={`Extension ${index + 1}`} />
+                          <Image src={`http://www.taxidermyvendor.hunt30.com/${extension.image}`} alt={`Extension ${index + 1}`} />
                         </TableCell>
                         <TableCell align="center">${extension.price}</TableCell>
                       </TableRow>

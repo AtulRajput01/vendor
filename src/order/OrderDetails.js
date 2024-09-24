@@ -52,7 +52,7 @@ const OrderDetails = () => {
 
   const fetchOrders = async () => {
     const vendorId = localStorage.getItem('vendorID');
-    const response = await axios.get(`http://54.244.180.151:3002/api/getOrder/${vendorId}`);
+    const response = await axios.get(`http://www.taxidermyvendor.hunt30.com/api/getOrder/${vendorId}`);
     const orders=response.data.data;
     const filteredOrders = orders.filter(order => order.status !== "delivered");
     setOrders(filteredOrders);
@@ -60,7 +60,7 @@ const OrderDetails = () => {
 
 
   const handleConfirmOrder = async (id, status) => {
-    await axios.put(`http://54.244.180.151:3002/api/order/${id}`, { status });
+    await axios.put(`http://www.taxidermyvendor.hunt30.com/api/order/${id}`, { status });
     fetchOrders();
   };
 
@@ -234,7 +234,7 @@ const OrderDetails = () => {
                       <TableRow key={index}>
                         <TableCell align="center">{species.speciesName}</TableCell>
                         <TableCell align="center">
-                          <Image src={`http://54.244.180.151:3002/${species.image}`} alt={`Species ${index + 1}`} />
+                          <Image src={`http://www.taxidermyvendor.hunt30.com/${species.image}`} alt={`Species ${index + 1}`} />
                         </TableCell>
                         <TableCell align="center">${species.speciesPrice}</TableCell>
                       </TableRow>
@@ -258,7 +258,7 @@ const OrderDetails = () => {
                       <TableRow key={index}>
                         <TableCell align="center">{extension.extensionName}</TableCell>
                         <TableCell align="center">
-                          <Image src={`http://54.244.180.151:3002/${extension.image}`} alt={`Extension ${index + 1}`} />
+                          <Image src={`http://www.taxidermyvendor.hunt30.com/${extension.image}`} alt={`Extension ${index + 1}`} />
                         </TableCell>
                         <TableCell align="center">${extension.price}</TableCell>
                       </TableRow>
